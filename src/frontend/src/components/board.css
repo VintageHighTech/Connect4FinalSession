@@ -1,0 +1,20 @@
+.square {
+    height: 70px;
+    width: 70px;
+    background-color: #1990ff;
+    cursor: pointer;
+  }
+
+.circle {
+    background-color: #1990ff;
+    height: 60px;
+    width: 60px;
+    border: none;
+    /* border-radius: 25px; */
+}
+.circle:focus {
+    background-color: #19ff56;
+}
+.circle:active {
+  background-color: #ff19c5;
+}

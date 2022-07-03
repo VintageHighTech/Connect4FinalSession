@@ -5,6 +5,7 @@ import GameMenu from './components/gameMenu';
 import Grid from '@mui/material/Grid';
 import RetrieveBlankBoard from './components/RetrieveBlankBoard';
 import Connect4Service from './api/Connect4Service';
+import TimeoutDialog from './components/TimeoutDialog'
 import Button from '@mui/material/Button' // ** TEMP ** to test requestMove from virtual player
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
   const [playerOne, setPlayerOne] = useState(defaultPlayerOne);
   const [playerTwo, setPlayerTwo] = useState(defaultPlayerTwo);
   const [resetEnabled, setResetEnabled] = useState(true);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [timeoutStarted, setTimeoutStarter] = React.useState(false);
 
   // *** NEW variables to be used in place of boardStatus variables
   let playerOneType = -1;
@@ -42,6 +45,25 @@ function App() {
       }
     )
   }, []);
+
+  const delay = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+  useEffect(() => {
+    if (!openDialog && !timeoutStarted) {
+      async function startTimeout() {
+        console.log('before');
+        // setOpenDialog(false);
+        setTimeoutStarter(true)
+        await delay(10000);
+        setTimeoutStarter(false)
+        setOpenDialog(true);
+        console.log('after');
+      }
+      startTimeout();
+    }
+  });
 
   function StartGame() {
     Connect4Service.startGame(playerOne.playerType, playerTwo.playerType)
@@ -130,6 +152,19 @@ function App() {
     )
   };
 
+  function HandleDialog() {
+    setOpenDialog(false);
+    Connect4Service.initialiseGame()
+    // Connect4Service.resetGame()
+    .then(
+      response => {
+        setResetEnabled(true);
+        setBoardStatus(response.data)
+        console.log('From useEffect(): ' + response.data)
+      }
+    )
+  };
+
   return (  
     <>
       <Grid alignItems='center' container direction='column' alignContent='center' justifyContent='center'>
@@ -153,6 +188,10 @@ function App() {
         />
       </Grid>
       {/* <Button onClick={() => requestMove(currentPlayer)}>Request Move</Button> */}
+      <TimeoutDialog
+        open={openDialog}
+        handleDialog={() => HandleDialog()}
+        />
     </>
   );
 };

@@ -12,15 +12,12 @@ public class PlayerEasy implements Player {
         int i = 0;
         int columnIndex = -1;
         int[] strategicMove = Board.potentialWin(board, playerNumber);
-        System.out.println(Arrays.toString(strategicMove));
+        System.out.println(Arrays.toString(strategicMove)); // **** TEMP ****
         if (strategicMove[0] != -1) {
             board[strategicMove[0]][strategicMove[1]] = playerNumber;
             return strategicMove;
         }
         while (!successfulMove) {
-            if (Board.boardFull(board)) {
-                return new int[] {-1, -1};
-            }
             columnIndex = ran.nextInt(7); // Selects any random column
             for (i = 0; i <= 5; i++) {
                 if(board[columnIndex][i] == 0) {
@@ -33,6 +30,9 @@ public class PlayerEasy implements Player {
                     System.out.println("Column " + columnIndex + "is full");
                 }
             }
+        }
+        if (Board.boardFull(board)) {
+            return new int[] {-1, -1};
         }
         return new int[] {columnIndex, i};
     }

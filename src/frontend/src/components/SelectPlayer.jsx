@@ -2,6 +2,8 @@ import React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { ThemeProvider } from '@emotion/react';
+import { selectButtonTheme } from '../muiStyleElements';
 
 export default function SelectPlayer(props) {
 
@@ -14,21 +16,17 @@ export default function SelectPlayer(props) {
   return (
     <>
       <FormControl>
+      <ThemeProvider theme={selectButtonTheme}>
         <Select
             sx={{
               backgroundColor: props.player.playerNumber === 1 ? '#ffdf33' : '#ff3333',
               fontWeight: 600,
-              fontSize: 15,
-              maxWidth: "135px",
-              maxHeight: "30px",
-              minWidth: "135px",
-              minHeight: "30px"
+              fontSize: 17,
             }}
             disabled={props.disabled}
             labelId="player1-label"
             id="player1-select"
             value={props.player.playerType}
-            // label={props.player}
             onChange={handleChange}
             renderValue={(selected) => {
               switch(selected) {
@@ -48,6 +46,7 @@ export default function SelectPlayer(props) {
             <MenuItem disabled value={2}>Medium</MenuItem>
             <MenuItem disabled value={3}>Unbeatable</MenuItem>
         </Select>
+        </ThemeProvider>
       </FormControl>
     </>
   )

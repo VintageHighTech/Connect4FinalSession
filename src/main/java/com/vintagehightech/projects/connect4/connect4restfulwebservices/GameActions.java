@@ -50,7 +50,7 @@ public class GameActions {
                 } else {
                     game.currentPlayer = game.currentPlayer == 1 ? 2 : 1;
                 }
-                return game;
+                return game; /// Something wrong with this if statement - look at first if!!
             }
         }
         game.error = "Can't move here!";
@@ -88,7 +88,7 @@ public class GameActions {
         game.setBoard(new int[7][6]);
         //  *** The below is required to test and fully reset.
 //            TestBoards testBoardInstance = new TestBoards();
-//            int[][] test = testBoardInstance.test4;
+//            int[][] test = testBoardInstance.test1;
 //            game.setBoard(test);
         // ***
         game.currentPlayer = 1;

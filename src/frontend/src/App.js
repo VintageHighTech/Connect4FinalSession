@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import RetrieveBlankBoard from './components/RetrieveBlankBoard';
 import Connect4Service from './api/Connect4Service';
 import TimeoutDialog from './components/TimeoutDialog'
-import Button from '@mui/material/Button' // ** TEMP ** to test requestMove from virtual player
+import Box from '@mui/material/Box'
 
 function App() {
   // Time to tidy up!!
@@ -25,7 +25,7 @@ function App() {
   const [playerTwo, setPlayerTwo] = useState(defaultPlayerTwo);
   const [resetEnabled, setResetEnabled] = useState(true);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [timeoutStarted, setTimeoutStarter] = React.useState(false);
+  const [timeoutStarted, setTimeoutStarted] = React.useState(false);
 
   // *** NEW variables to be used in place of boardStatus variables
   let playerOneType = -1;
@@ -46,23 +46,19 @@ function App() {
     )
   }, []);
 
-  const delay = ms => new Promise(
-    resolve => setTimeout(resolve, ms)
-  );
+  const expirationDelay = 30 * 60 * 1000;
 
+  // UseEffect to terminate session after a predetermined period of inaction
   useEffect(() => {
-    if (!openDialog && !timeoutStarted) {
-      async function startTimeout() {
-        console.log('before');
-        // setOpenDialog(false);
-        setTimeoutStarter(true)
-        await delay(10000);
-        setTimeoutStarter(false)
+    if (!openDialog) {
+      let gameExpire = setTimeout(() => {
         setOpenDialog(true);
-        console.log('after');
-      }
-      startTimeout();
-    }
+        Connect4Service.endSession();
+        console.log("Session terminated");
+      }, expirationDelay);
+      console.log('gameExpire', gameExpire);
+      return () => {clearTimeout(gameExpire)};
+    } 
   });
 
   function StartGame() {
@@ -155,18 +151,17 @@ function App() {
   function HandleDialog() {
     setOpenDialog(false);
     Connect4Service.initialiseGame()
-    // Connect4Service.resetGame()
     .then(
       response => {
-        setResetEnabled(true);
-        setBoardStatus(response.data)
+        updateFrontEnd(response.data)
+        ResetGame();
         console.log('From useEffect(): ' + response.data)
       }
     )
   };
 
   return (  
-    <>
+    <Box margin={1}>
       <Grid alignItems='center' container direction='column' alignContent='center' justifyContent='center'>
         <ConnectBoard
           boardStatus={boardStatus}
@@ -192,7 +187,7 @@ function App() {
         open={openDialog}
         handleDialog={() => HandleDialog()}
         />
-    </>
+    </Box>
   );
 };
 

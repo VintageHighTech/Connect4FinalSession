@@ -37,6 +37,9 @@ public class GameService {
         game = GameActions.requestMove(game, playerNumber);
         return game;
     }
+    public Connect4Game resetBoard(Connect4Game game) {
+        return GameActions.resetBoard(game);
+    }
 
 
 }

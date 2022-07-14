@@ -98,4 +98,12 @@ public class GameActions {
         return game;
     }
 
+    public static Connect4Game resetBoard(Connect4Game game) {
+        game.setBoard(new int[7][6]);
+        game.currentPlayer = 1;
+        game.gameOver = false;
+        game.inProgress = true;
+        return game;
+    }
+
 }

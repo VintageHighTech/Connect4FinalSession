@@ -58,8 +58,10 @@ public class Connect4Controller {
                                   HttpServletRequest request) {
 //        System.out.println((Connect4Game) request.getSession().getAttribute("game")); // *** TEMP ***
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
+        Connect4Game resetTempBoard = newGameService.resetBoard(temp);
 //        System.out.println("temp = " + temp); // *** TEMP ***
-        Connect4Game returnTemp = newGameService.startNewGame(temp,
+        // add returnTemp to reset board ONLY, not game.
+        Connect4Game returnTemp = newGameService.startNewGame(resetTempBoard,
                 Integer.parseInt(playerOne),
                 Integer.parseInt(playerTwo));
         request.getSession().setAttribute("game", returnTemp);
@@ -77,11 +79,6 @@ public class Connect4Controller {
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
-//    @GetMapping(path = "/requestmove/{playerNumber}")
-//    public Connect4Game requestMove(@PathVariable int playerNumber) {
-//        return newGameService.requestMove(playerNumber);
-//    }
-
     @GetMapping(path = "/requestmove/{playerNumber}")
     public Connect4Game requestMove(@PathVariable int playerNumber, HttpServletRequest request) {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
@@ -96,5 +93,4 @@ public class Connect4Controller {
         request.getSession().setAttribute("game", newGameService.resetGame());
         return (Connect4Game) request.getSession().getAttribute("game");
     }
-
 }

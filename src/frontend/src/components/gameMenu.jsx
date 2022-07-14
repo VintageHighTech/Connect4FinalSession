@@ -28,7 +28,9 @@ export default function GameMenu (props) {
         />
         <ThemeProvider theme={startButtonTheme}>
           <Button
-            disabled={!props.resetEnabled || props.playerOne.playerType === -1 || props.playerTwo.playerType === -1}
+            // disabled={!props.resetEnabled}
+            disabled={props.inProgress || props.playerOne.playerType === -1 || props.playerTwo.playerType === -1}
+            // disabled={!props.resetEnabled || props.playerOne.playerType === -1 || props.playerTwo.playerType === -1}
             onClick={() => props.startGame()}
             variant="contained"
             color="success"

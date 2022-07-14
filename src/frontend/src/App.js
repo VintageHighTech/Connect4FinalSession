@@ -9,7 +9,6 @@ import TimeoutDialog from './components/TimeoutDialog'
 import Box from '@mui/material/Box'
 
 function App() {
-  // Time to tidy up!!
   const defaultPlayerOne = {
     playerNumber: 1,
     playerType: -1
@@ -25,7 +24,6 @@ function App() {
   const [playerTwo, setPlayerTwo] = useState(defaultPlayerTwo);
   const [resetEnabled, setResetEnabled] = useState(true);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [timeoutStarted, setTimeoutStarted] = React.useState(false);
 
   // *** NEW variables to be used in place of boardStatus variables
   let playerOneType = -1;
@@ -46,7 +44,7 @@ function App() {
     )
   }, []);
 
-  const expirationDelay = 30 * 60 * 1000;
+  const expirationDelay = 30 * 60 * 1000; //30 minutes until game times out.
 
   // UseEffect to terminate session after a predetermined period of inaction
   useEffect(() => {
@@ -182,7 +180,6 @@ function App() {
           resetEnabled={resetEnabled}
         />
       </Grid>
-      {/* <Button onClick={() => requestMove(currentPlayer)}>Request Move</Button> */}
       <TimeoutDialog
         open={openDialog}
         handleDialog={() => HandleDialog()}

@@ -17,6 +17,21 @@ public class PlayerEasy implements Player {
             board[strategicMove[0]][strategicMove[1]] = playerNumber;
             return strategicMove;
         }
+        // ****** GOT IT *******
+        /*
+            If the final move is a 'strategicMove' i.e. either winning or blocking,
+            we do not check to see if the board is full. We only check if we make a
+            random move.
+            Maybe we should move the boardFull check out of this method and use it
+            wherever this method returns its result.
+         */
+
+        /* Maybe don't repeatedly pick random numbers from 0 to 6 until
+            you find an empty (zero) space. Keep a log of checked columns.
+            This is where it gets stuck on an infinite loop.
+        */
+        // Add new call to method Board.randomMove(board, playerNumber);
+        // Make more efficient- pick rndm number; check if top position is empty; if so, make move
         while (!successfulMove) {
             columnIndex = ran.nextInt(7); // Selects any random column
             for (i = 0; i <= 5; i++) {

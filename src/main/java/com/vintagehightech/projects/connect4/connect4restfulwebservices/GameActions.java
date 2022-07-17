@@ -100,9 +100,10 @@ public class GameActions {
 
     public static Connect4Game resetBoard(Connect4Game game) {
         game.setBoard(new int[7][6]);
+        game.error = "Select Players to start game. Yellow goes first."; // this hasn't worked!!
         game.currentPlayer = 1;
         game.gameOver = false;
-        game.inProgress = true;
+        game.inProgress = false;
         return game;
     }
 

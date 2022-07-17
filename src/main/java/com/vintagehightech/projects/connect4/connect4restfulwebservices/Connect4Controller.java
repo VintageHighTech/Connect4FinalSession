@@ -8,21 +8,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-// Don't think I need the below anymore: running on same port in single jar
-@CrossOrigin(origins= {"http://localhost:3000", "https://c4frontend74-257ad.web.app" })
+@CrossOrigin(origins= {"http://localhost:3000"}) // For the purposes of development on local machine
 public class Connect4Controller {
-
-    /*
-    Destroying old sessions after time:
-        - use invalidate()?
-        - how to know session name/number?
-            - could set a timer on frontend that then sends a 'terminate' call to backend
-
-        - use a 'socket'
-            - frontend then listens for an event from the backend
-
-
-     */
 
     @Autowired
     private GameService newGameService;

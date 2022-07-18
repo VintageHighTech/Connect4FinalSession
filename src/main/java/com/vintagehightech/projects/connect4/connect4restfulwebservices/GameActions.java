@@ -2,8 +2,6 @@ package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 
 public class GameActions {
 
-
-
     public static Connect4Game setPlayers(Connect4Game game, int p1, int p2) {
         switch (p1) {
             case (0):
@@ -38,7 +36,7 @@ public class GameActions {
             if(game.board[columnIndex][i] == 0) {
                 game.board[columnIndex][i] = game.currentPlayer;
 
-                game.error = null;
+                game.error = null; // why set to null??
                 if (Board.winningMove(game.board, columnIndex, i, game.currentPlayer)) {
                     game.gameOver = true;
                     game.inProgress = false;
@@ -69,14 +67,19 @@ public class GameActions {
             game.error = "Game Over. It's a draw!";
             return game;
         }
-//        System.out.println("From Connect4Game requestMove: " + index[0] + ", " + index[1]); // *** TEMP ***
         if (Board.winningMove(game.board, index[0], index[1], playerNumber)) {
             game.gameOver = true;
             game.inProgress = false;
             game.error = String.format("Game Over. The winner is %s!", game.currentPlayer == 1 ? "Yellow" : "Red");
-        } else {
-            game.currentPlayer = game.currentPlayer == 1 ? 2 : 1;
+            return game;
         }
+        if (Board.boardFull(game.board)) {
+            game.gameOver = true;
+            game.inProgress = false;
+            game.error = "Game Over. It's a draw!";
+            return game;
+        }
+        game.currentPlayer = game.currentPlayer == 1 ? 2 : 1;
         return game;
     }
 
@@ -86,20 +89,19 @@ public class GameActions {
         game.playerTwoType = -1;
         game.error = null;
         game.setBoard(new int[7][6]);
-        //  *** The below is required to test and fully reset.
-//            TestBoards testBoardInstance = new TestBoards();
-//            int[][] test = testBoardInstance.test1;
-//            game.setBoard(test);
-        // ***
         game.currentPlayer = 1;
         game.gameOver = false;
         game.inProgress = false;
-
         return game;
     }
 
     public static Connect4Game resetBoard(Connect4Game game) {
         game.setBoard(new int[7][6]);
+//  *** The below is required to test and fully reset.
+//        TestBoards testBoardInstance = new TestBoards();
+//        int[][] test = testBoardInstance.test8;
+//        game.setBoard(test);
+// ***
         game.error = "Select Players to start game. Yellow goes first."; // this hasn't worked!!
         game.currentPlayer = 1;
         game.gameOver = false;

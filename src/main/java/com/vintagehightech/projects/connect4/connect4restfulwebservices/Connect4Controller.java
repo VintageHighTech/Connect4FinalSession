@@ -39,7 +39,7 @@ public class Connect4Controller {
     }
 
     // THIS WORKS!! but do i need to parse the integers???
-    @GetMapping(path = "/start/{playerOne}/{playerTwo}")
+    @PutMapping(path = "/start/{playerOne}/{playerTwo}")
     public Connect4Game startGame(@PathVariable String playerOne,
                                   @PathVariable String playerTwo,
                                   HttpServletRequest request) {
@@ -56,8 +56,7 @@ public class Connect4Controller {
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
-
-    @GetMapping(path = "/move/{columnIndex}")
+    @PutMapping(path = "/move/{columnIndex}")
     public Connect4Game makeMove(@PathVariable int columnIndex, HttpServletRequest request) {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
         Connect4Game returnTemp = newGameService.makeMove(temp, columnIndex);

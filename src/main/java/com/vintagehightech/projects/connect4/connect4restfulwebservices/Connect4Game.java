@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class Connect4Game {
 
     int[][] board = new int[7][6];
+    int[] latestMove = new int[2];
     int playerOneType = -1;
     int playerTwoType = -1;
     int currentPlayer;
@@ -73,5 +74,13 @@ public class Connect4Game {
 
     public void setInProgress(boolean inProgress) {
         this.inProgress = inProgress;
+    }
+
+    public int[] getLatestMove() {
+        return latestMove;
+    }
+
+    public void setLatestMove(int[] latestMove) {
+        this.latestMove = latestMove;
     }
 }

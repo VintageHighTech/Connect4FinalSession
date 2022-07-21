@@ -1,11 +1,11 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import ConnectBoard from './components/ConnectBoard';
+import ConnectBoard from './components/connectBoard';
 import GameMenu from './components/gameMenu';
 import Grid from '@mui/material/Grid';
-import RetrieveBlankBoard from './components/RetrieveBlankBoard';
-import Connect4Service from './api/Connect4Service';
-import TimeoutDialog from './components/TimeoutDialog'
+import RetrieveBlankBoard from './components/retrieveBlankBoard';
+import Connect4Service from './api/connect4Service';
+import TimeoutDialog from './components/timeoutDialog'
 import Box from '@mui/material/Box'
 
 function App() {
@@ -160,7 +160,12 @@ function App() {
 
   return (  
     <Box margin={1}>
-      <Grid alignItems='center' container direction='column' alignContent='center' justifyContent='center'>
+      <Grid
+        alignItems='center'
+        container direction='column'
+        alignContent='center'
+        justifyContent='center'
+      >
         <ConnectBoard
           boardStatus={boardStatus}
           setBoardStatus={setBoardStatus}
@@ -183,7 +188,7 @@ function App() {
       <TimeoutDialog
         open={openDialog}
         handleDialog={() => HandleDialog()}
-        />
+      />
     </Box>
   );
 };

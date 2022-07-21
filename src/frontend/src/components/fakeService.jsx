@@ -1,3 +1,4 @@
+// ONLY USED FOR TESTING before generating API calls to actual backend
 
 let board = [ 
     [0, 0, 0, 0, 0, 0],
@@ -22,7 +23,6 @@ export const updateBoard = (columnIndex) => {
         }
     }
     board[columnIndex] = newColumn;
-    // console.log('After change', board);
     return board;
 };
 

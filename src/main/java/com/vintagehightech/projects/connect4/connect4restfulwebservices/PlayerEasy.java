@@ -63,20 +63,22 @@ public class PlayerEasy implements Player {
             board[strategicMove[0]][strategicMove[1]] = playerNumber;
             return strategicMove;
         }
-        while (!successfulMove) {
+        while (!successfulMove) { // this could just be "while(true)" - successfulMove is never used
             columnIndex = ran.nextInt(7); // Selects any random column
             for (i = 0; i <= 5; i++) { // no need for i = 0; it's defined at top of method
                 if(board[columnIndex][i] == 0) {
                     board[columnIndex][i] = playerNumber;
                     successfulMove = true;
                     System.out.println("Success: column: " + columnIndex + ", row " + i);
-                    break;
-                }
-                if (!successfulMove) {
-                    System.out.println("Column " + columnIndex + "is full");
+                    return new int[] {columnIndex, i};
                 }
             }
         }
-        return new int[] {columnIndex, i};
+        return new int[] {-1, -1}; /* This return statement is never executed. There will always
+                                        be a 'successful move', because this method will never
+                                        be called if the board is already full. Consider refactoring
+                                        so there's a single (reachable) return statement at the end,
+                                        rather than two conditional returns.
+                                    */
     }
 }

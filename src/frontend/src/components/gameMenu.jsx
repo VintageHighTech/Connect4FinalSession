@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button'
-import SelectPlayer from './SelectPlayer';
+import SelectPlayer from './selectPlayer';
 import Stack from '@mui/material/Stack';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { startButtonTheme, buttonSize } from '../muiStyleElements';
@@ -8,7 +8,6 @@ import { startButtonTheme, buttonSize } from '../muiStyleElements';
 export default function GameMenu (props) {
 
   return (
-    <>
       <Stack
         marginTop={2}
         direction={{ xs: 'column', sm: 'row' }}
@@ -34,7 +33,6 @@ export default function GameMenu (props) {
             onClick={() => props.startGame()}
             variant="contained"
             color="success"
-            // sx={buttonSize}
           >
             START
           </Button>
@@ -43,12 +41,10 @@ export default function GameMenu (props) {
             onClick={() => props.resetGame()}
             variant="contained"
             color="warning"
-            // sx={buttonSize}
-            >
-              RESET
-            </Button>
+          >
+            RESET
+          </Button>
         </ThemeProvider>
       </Stack>
-    </>
   )
 };

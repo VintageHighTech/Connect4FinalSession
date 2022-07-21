@@ -14,8 +14,7 @@ export default function SelectPlayer(props) {
     };
 
   return (
-    <>
-      <FormControl>
+    <FormControl>
       <ThemeProvider theme={selectButtonTheme}>
         <Select
             sx={{
@@ -46,9 +45,8 @@ export default function SelectPlayer(props) {
             <MenuItem disabled value={2}>Medium</MenuItem>
             <MenuItem disabled value={3}>Unbeatable</MenuItem>
         </Select>
-        </ThemeProvider>
-      </FormControl>
-    </>
+      </ThemeProvider>
+    </FormControl>
   )
 };
 

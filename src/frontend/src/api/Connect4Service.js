@@ -14,11 +14,11 @@ class Connect4Service {
   };
 
   startGame(playerOne, playerTwo) {
-    return axios.get(`start/${playerOne}/${playerTwo}`);
+    return axios.put(`start/${playerOne}/${playerTwo}`);
   };
 
   makeMove(columnIndex) {
-    return axios.get(`move/${columnIndex}`);
+    return axios.put(`move/${columnIndex}`);
   };
 
   requestMove(playerNumber) {

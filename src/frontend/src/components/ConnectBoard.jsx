@@ -1,12 +1,12 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Disc from './Disc';
+import Disc from './disc';
 import '../App.css';
 
 export default function ConnectBoard(props) {
 
-  function Column(column, cIndex) {
+  function boardColumn(column, cIndex) {
     return (
       <Grid container direction="column-reverse" style={{ gap: 5}}>
         {column.map((piece, index) => {
@@ -36,11 +36,11 @@ export default function ConnectBoard(props) {
           backgroundColor: '#0079ff'
         }}
       >
-        <Grid container direction="row" justifyContent="center" style={{ gap: 5}}>
+        <Grid container direction="row" justifyContent="center" style={{ gap: 5 }}>
           {props.boardStatus.board.map((column, index) => { // was just 'board.map'
             return (
               <Grid key={index}>
-                {Column(column, index)}
+                {boardColumn(column, index)}
               </Grid>
             )
           })}

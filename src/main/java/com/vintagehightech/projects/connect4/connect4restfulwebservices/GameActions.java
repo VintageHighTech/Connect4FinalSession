@@ -92,7 +92,7 @@ public class GameActions {
         Connect4Game game = new Connect4Game();
         game.playerOneType = -1;
         game.playerTwoType = -1;
-        game.error = null;
+        game.error = "Select Players to start game. Yellow goes first.";
         game.setBoard(new int[7][6]);
         game.setLatestMove(new int[] {-1, -1});
         game.currentPlayer = 1;

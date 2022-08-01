@@ -44,13 +44,13 @@ function App() {
     )
   }, []);
 
-  const expirationDelay = 30 * 60 * 1000; //30 minutes until game times out.
+  const expirationDelay = 0.25 * 60 * 1000; //30 minutes until game times out.
 
   // UseEffect to terminate session after a predetermined period of inaction
   useEffect(() => {
     if (!openDialog) {
       let gameExpire = setTimeout(() => {
-        setOpenDialog(true);
+        // setOpenDialog(true);
         Connect4Service.endSession();
         console.log("Session terminated");
       }, expirationDelay);
@@ -63,6 +63,12 @@ function App() {
     Connect4Service.startGame(playerOne.playerType, playerTwo.playerType)
       .then(
         response => {
+          if (response.data.error === "Ain't working!") { // Dont use literal String error. Use enum??
+            Connect4Service.initialiseGame()
+            .then(
+              StartGame
+            )
+          }
           console.log("Start Game returned data", response.data)
           updateFrontEnd(response.data)
           setResetEnabled(false)

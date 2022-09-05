@@ -12,7 +12,9 @@ public class GameActions {
                 game.one = new PlayerEasy();
                 game.playerOneType = 1;
                 break;
-            // cases for 2 & 3;
+            case (3):
+                game.one = new PlayerHard();
+                game.playerOneType = 3;
         }
         switch (p2) {
             case (0):
@@ -22,6 +24,10 @@ public class GameActions {
             case (1):
                 game.two = new PlayerEasy();
                 game.playerTwoType = 1;
+                break;
+            case (3):
+                game.two = new PlayerHard();
+                game.playerTwoType = 3;
                 break;
             // cases for 2 & 3;
         }

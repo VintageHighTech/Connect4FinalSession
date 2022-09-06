@@ -21,7 +21,7 @@ public class PlayerHard implements Player {
             for (int j = 0; j <= 5; j++) {
                 if (tempBoard[i][j] == 0) {
                     tempBoard[i][j] = playerNumber;
-                    int score = minimax(tempBoard, 8, new int[]{i, j}, playerNumber,  false);
+                    int score = minimax(tempBoard, 6, new int[]{i, j}, playerNumber,  false);
                     System.out.println("Column " + i + ": score = " + score);
 
                     tempBoard[i][j] = 0;

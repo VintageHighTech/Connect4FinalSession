@@ -111,9 +111,9 @@ public class GameActions {
         game.setLatestMove(new int[] {-1, -1});
         game.setBoard(new int[7][6]);
 //  *** The below is required to test and fully reset.
-//        TestBoards testBoardInstance = new TestBoards();
-//        int[][] test = testBoardInstance.test8;
-//        game.setBoard(test);
+        TestBoards testBoardInstance = new TestBoards();
+        int[][] test = testBoardInstance.testH2;
+        game.setBoard(test);
 // ***
         game.error = "Select Players to start game. Yellow goes first."; // this hasn't worked!!
         game.currentPlayer = 1;

@@ -35,7 +35,7 @@ public class GameService {
 
     public Connect4Game requestMove(Connect4Game game, int playerNumber) {
         game = GameActions.requestMove(game, playerNumber);
-        System.out.println("Latest Virtual Move: " + game.latestMove[0] + ", " + game.latestMove[1]);
+//        System.out.println("Latest Virtual Move: " + game.latestMove[0] + ", " + game.latestMove[1]);
         return game;
     }
     public Connect4Game resetBoard(Connect4Game game) {

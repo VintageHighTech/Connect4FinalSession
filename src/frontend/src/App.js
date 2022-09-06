@@ -128,11 +128,12 @@ function App() {
         updateFrontEnd(response.data)
         if (inProgress) {
           backEndMakeMove();
-          // showLocalStatus(); // *** TEMP ***
+          showLocalStatus(); // *** TEMP ***
         };
         if (response.data.error != null) {
           setDisplayStatus(response.data.error)
         } else if (boardStatus.inProgress) {
+          // console.log(response.data.latestMove); // *** TEMP ***
           setDisplayStatus(response.data.currentPlayer === 1 ? "Yellow's move." : "Red's move.");
         }
       }

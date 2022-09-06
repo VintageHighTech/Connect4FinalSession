@@ -31,7 +31,7 @@ public class Connect4Controller {
     public Connect4Game initialiseGame(HttpSession session) {
         Connect4Game game = GameActions.resetGame();
         session.setAttribute("game", game);
-        System.out.println(session.getId()); // ** TEMP **
+//        System.out.println(session.getId()); // ** TEMP **
 //        System.out.println("From initialiseGame: game = " + (Connect4Game) session.getAttribute("game")); // *** TEMP ***
         return (Connect4Game) session.getAttribute("game");
     }
@@ -60,7 +60,7 @@ public class Connect4Controller {
 //        System.out.println((Connect4Game) request.getSession().getAttribute("game")); // *** TEMP ***
         Connect4Game temp = new Connect4Game();
         if (request.getSession().getAttribute("game") != null) {
-            System.out.println("stored game is not null");
+//            System.out.println("stored game is not null");
             temp = (Connect4Game) request.getSession().getAttribute("game");
         }
 //
@@ -71,7 +71,7 @@ public class Connect4Controller {
                 Integer.parseInt(playerOne),
                 Integer.parseInt(playerTwo));
         request.getSession().setAttribute("game", returnTemp);
-        System.out.println(request.getSession().getId()); // ** TEMP **
+//        System.out.println(request.getSession().getId()); // ** TEMP **
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
@@ -80,7 +80,7 @@ public class Connect4Controller {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
         Connect4Game returnTemp = newGameService.makeMove(temp, columnIndex);
         request.getSession().setAttribute("game", returnTemp);
-        System.out.println(request.getSession().getId()); // ** TEMP **
+//        System.out.println(request.getSession().getId()); // ** TEMP **
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
@@ -89,7 +89,7 @@ public class Connect4Controller {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
         Connect4Game returnTemp = newGameService.requestMove(temp, playerNumber);
         request.getSession().setAttribute("game", returnTemp);
-        System.out.println(request.getSession().getId()); // ** TEMP **
+//        System.out.println(request.getSession().getId()); // ** TEMP **
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 

@@ -53,12 +53,12 @@ public class PlayerEasy implements Player {
 //    }
 
     public int[] makeMove(int[][] board, int playerNumber) {
-        System.out.println("I'm Easy");
+//        System.out.println("I'm Easy");
         boolean successfulMove = false;
         int i = 0;
         int columnIndex = -1;
         int[] strategicMove = Board.potentialWin(board, playerNumber);
-        System.out.println(Arrays.toString(strategicMove)); // **** TEMP ****
+//        System.out.println(Arrays.toString(strategicMove)); // **** TEMP ****
         if (strategicMove[0] != -1) {
             board[strategicMove[0]][strategicMove[1]] = playerNumber;
             return strategicMove;
@@ -69,7 +69,7 @@ public class PlayerEasy implements Player {
                 if(board[columnIndex][i] == 0) {
                     board[columnIndex][i] = playerNumber;
                     successfulMove = true;
-                    System.out.println("Success: column: " + columnIndex + ", row " + i);
+//                    System.out.println("Success: column: " + columnIndex + ", row " + i);
                     return new int[] {columnIndex, i};
                 }
             }

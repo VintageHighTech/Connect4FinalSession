@@ -6,7 +6,7 @@ public class Board {
     // This is just a reference class - no instances will be made
 
     public static boolean winningMove(int[][] board, int col,int row, int player) {
-        System.out.println("Column " + col + "; Element " + row); // *** TEMP ***
+//        System.out.println("Column " + col + "; Element " + row); // *** TEMP ***
         /*Below generates 2D array, each line represents the current state of vertical, horizontal
           & both diagonals around the disc that was last added to the board
         */
@@ -80,7 +80,7 @@ public class Board {
                 if (line[i] == player) {
                     winCount++;
                     if (winCount == 3) {
-                        System.out.println("Best move is: " + col); // *** TEMP ***
+//                        System.out.println("Best move is: " + col); // *** TEMP ***
                         return true;
                     }
                 } else if (i != 3){ // i.e. ignore the zero in the centre of each 'line'
@@ -104,6 +104,14 @@ public class Board {
         System.out.println("..................");
         System.out.println("\n" + note);
         for (int[] line : data) {
+            System.out.println(Arrays.toString(line));
+        }
+        System.out.println("..................");
+    }
+
+    public static void terminalDisplayBoard(int[][] board) {
+        System.out.println("..................");
+        for (int[] line : board) {
             System.out.println(Arrays.toString(line));
         }
         System.out.println("..................");

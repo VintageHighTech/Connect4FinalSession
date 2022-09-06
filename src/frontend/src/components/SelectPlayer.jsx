@@ -33,7 +33,7 @@ export default function SelectPlayer(props) {
                 case 0: return 'Human'; 
                 case 1: return 'Easy';
                 case 2: return 'Medium';
-                case 3: return 'Unbeatable';
+                case 3: return 'Hard';
               }
             }}
         >   
@@ -43,7 +43,7 @@ export default function SelectPlayer(props) {
             <MenuItem value={0}>Human</MenuItem>
             <MenuItem value={1}>Easy</MenuItem>
             <MenuItem disabled value={2}>Medium</MenuItem>
-            <MenuItem disabled value={3}>Unbeatable</MenuItem>
+            <MenuItem value={3}>Hard</MenuItem>
         </Select>
       </ThemeProvider>
     </FormControl>

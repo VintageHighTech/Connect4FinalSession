@@ -1,16 +1,16 @@
 package com.vintagehightech.projects.connect4.connect4restfulwebservices;
+
 import java.util.Arrays;
 
-public class PlayerHard implements Player {
+public class PlayerHardTwo {
 
-    int currentPlayer;
-    int oppositionPlayer;
+    int player;
+    int oppPlayer;
 
     public int[] makeMove(int[][] board, int playerNumber) {
         System.out.println("Hard Level Move");
-        this.currentPlayer = playerNumber;
-        this.oppositionPlayer = playerNumber == 1 ? 2 : 1;
-
+        this.player = playerNumber;
+        this.oppPlayer = playerNumber == 1 ? 2 : 1;
         int[][] tempBoard = Arrays.copyOf(board, board.length);
 //        Board.terminalDisplayBoard(tempBoard);
 
@@ -21,7 +21,7 @@ public class PlayerHard implements Player {
             for (int j = 0; j <= 5; j++) {
                 if (tempBoard[i][j] == 0) {
                     tempBoard[i][j] = playerNumber;
-                    int score = minimax(tempBoard, 8, new int[]{i, j}, playerNumber,  false);
+                    int score = minimax(tempBoard, 6, new int[]{i, j}, false);
                     System.out.println("Column " + i + ": score = " + score);
 
                     tempBoard[i][j] = 0;
@@ -41,27 +41,25 @@ public class PlayerHard implements Player {
         return bestMove;
     }
 
-    public int minimax(int[][] board, int depth, int[] coordinates, int player, boolean isMax) {
-//        int score = checkScore(board, coordinates[0], coordinates[1], player);
-        int score = checkScoreAll(board);
+    public int minimax(int[][] board, int depth, int[] coordinates, boolean isMax) {
+        int score = checkScore(board, coordinates[0], coordinates[1], isMax);
         if (depth <= 0) {
             return score;
         }
         if (Board.boardFull(board)) {
-           return 0;
+            return 0;
         }
         if (score == 10 || score == -10 || score == 20 || score == -20) {
             return score;
         }
+
         if (isMax) {
             int best = Integer.MIN_VALUE;
             for (int i = 0; i <= 6; i++) {
                 for (int j = 0; j <= 5; j++) {
                     if (board[i][j] == 0) {
-                        board[i][j] = currentPlayer;
-                        best = Math.max(best, minimax(board, depth - 1, new int[]{i, j}, currentPlayer, false));
-//                        System.out.println("max");
-
+                        board[i][j] = player;
+                        best = Math.max(best, minimax(board, depth - 1, new int[]{i, j}, false));
 
 //                        Board.terminalDisplayBoard(board); // ******** TEMP
 //                        System.out.println("Score for Max = " + checkScore(board, i, j, true)); // TEMP
@@ -76,13 +74,11 @@ public class PlayerHard implements Player {
             return best;
         } else {
             int best = Integer.MAX_VALUE;
-//            int oppPlayer = player == 1 ? 2 : 1;
             for (int i = 0; i <= 6; i++) {
                 for (int j = 0; j <= 5; j++) {
                     if (board[i][j] == 0) {
-                        board[i][j] = oppositionPlayer;
-                        best = Math.min(best, minimax(board, depth - 1, new int[]{i, j}, oppositionPlayer, true));
-//                        System.out.println("min");
+                        board[i][j] = oppPlayer;
+                        best = Math.min(best, minimax(board, depth - 1, new int[]{i, j}, true));
 
 //                        Board.terminalDisplayBoard(board); // ******** TEMP
 //                        System.out.println("Score for Max = " + checkScore(board, i, j, true)); // TEMP
@@ -99,43 +95,35 @@ public class PlayerHard implements Player {
 
 //        return 0; // **** TEMP *****
     }
-//
-    public int checkScore(int[][] board, int col, int row, int player) {
-        if (player == currentPlayer) {
-            if (Board.winningMove(board, col, row, player)) {
-                return 20;
-            }
-            if (Board.checkMove(board, col, row, player)) {
-                return 10;
-            }
+    //
+    public int checkScore(int[][] board, int col, int row, boolean isMax) {
+        if (Board.winningMove(board, col, row, isMax ? player : oppPlayer)) {
+            return 20;
         }
-        if (player == oppositionPlayer) {
-            if (Board.winningMove(board, col, row, player)) {
-                return -20;
-            }
-            if (Board.checkMove(board, col, row, player)) {
-                return -10;
-            }
+        if (Board.winningMove(board, col, row, isMax ? oppPlayer : player)) {
+            return -20;
+        }
+        if (Board.checkMove(board, col, row, isMax ? player : oppPlayer)) {
+            return 10;
+        }
+        if (Board.checkMove(board, col, row, isMax ? oppPlayer : player)) {
+            return -10;
         }
         return 0; // Should be 0. Temp set to 5 so I can see when this method returns this statement.
     }
-    public int checkScoreAll(int[][] board) {
-        for (int col = 0; col < board.length; col++) {
-            for (int row = 0; row < board[0].length; row++) {
-                if (board[col][row] == currentPlayer && Board.winningMove(board, col, row, currentPlayer)) {
-                    return 20;
-                }
-                if (board[col][row] == oppositionPlayer && Board.winningMove(board, col, row, oppositionPlayer)) {
-                    return -20;
-                }
-//                if (board[col][row] == currentPlayer && Board.checkMove(board, col, row, currentPlayer)) {
-//                    return 10;
-//                }
-//                if (board[col][row] == oppositionPlayer && Board.checkMove(board, col, row, oppositionPlayer)) {
-//                    return -10;
-//                }
-            }
-        }
-        return 0;
-    }
+//    public int checkScore(int[][] board, int col, int row, boolean isMax) {
+//        if (Board.winningMove(board, col, row, player)) {
+//            return 20;
+//        }
+//        if (Board.checkMove(board, col, row, player)) {
+//            return 10;
+//        }
+//        if (Board.winningMove(board, col, row, oppPlayer)) {
+//            return -20;
+//        }
+//        if (Board.checkMove(board, col, row, oppPlayer)) {
+//            return -10;
+//        }
+//        return 0; // Should be 0. Temp set to 5 so I can see when this method returns this statement.
+//    }
 }

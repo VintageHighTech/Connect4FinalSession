@@ -5,6 +5,7 @@ public class PlayerHard implements Player {
 
     int currentPlayer;
     int oppositionPlayer;
+    final int depthTarget = 5;
 
     public int[] makeMove(int[][] board, int playerNumber) {
         System.out.println("Hard Level Move");
@@ -21,7 +22,7 @@ public class PlayerHard implements Player {
             for (int j = 0; j <= 5; j++) {
                 if (tempBoard[i][j] == 0) {
                     tempBoard[i][j] = playerNumber;
-                    int score = minimax(tempBoard, 6, new int[]{i, j}, playerNumber,  false);
+                    int score = minimax(tempBoard, depthTarget, Integer.MIN_VALUE, Integer.MAX_VALUE,  false);
                     System.out.println("Column " + i + ": score = " + score);
 
                     tempBoard[i][j] = 0;
@@ -41,16 +42,16 @@ public class PlayerHard implements Player {
         return bestMove;
     }
 
-    public int minimax(int[][] board, int depth, int[] coordinates, int player, boolean isMax) {
+    public int minimax(int[][] board, int depth, int alpha, int beta, boolean isMax) {
 //        int score = checkScore(board, coordinates[0], coordinates[1], player);
-        int score = checkScoreAll(board);
+        int score = checkScoreAll(board, depth);
         if (depth <= 0) {
             return score;
         }
         if (Board.boardFull(board)) {
            return 0;
         }
-        if (score == 10 || score == -10 || score == 20 || score == -20) {
+        if (score == depthTarget || score == -depthTarget) {
             return score;
         }
         if (isMax) {
@@ -59,7 +60,7 @@ public class PlayerHard implements Player {
                 for (int j = 0; j <= 5; j++) {
                     if (board[i][j] == 0) {
                         board[i][j] = currentPlayer;
-                        best = Math.max(best, minimax(board, depth - 1, new int[]{i, j}, currentPlayer, false));
+                        best = Math.max(best, minimax(board, depth - 1, alpha, beta, false));
 //                        System.out.println("max");
 
 
@@ -71,6 +72,10 @@ public class PlayerHard implements Player {
                         break;
                     }
                 }
+//                alpha = Math.max(alpha, best);
+//                if (beta <= alpha) {
+//                    break;
+//                }
             }
 //            System.out.println("Maximise Best = " + best);
             return best;
@@ -81,7 +86,7 @@ public class PlayerHard implements Player {
                 for (int j = 0; j <= 5; j++) {
                     if (board[i][j] == 0) {
                         board[i][j] = oppositionPlayer;
-                        best = Math.min(best, minimax(board, depth - 1, new int[]{i, j}, oppositionPlayer, true));
+                        best = Math.min(best, minimax(board, depth - 1, alpha, beta, true));
 //                        System.out.println("min");
 
 //                        Board.terminalDisplayBoard(board); // ******** TEMP
@@ -92,6 +97,10 @@ public class PlayerHard implements Player {
                         break;
                     }
                 }
+//                beta = Math.min(beta, best);
+//                if (beta <= alpha) {
+//                    break;
+//                }
             }
 //            System.out.println("Minimise Best = " + best);
             return best;
@@ -119,14 +128,26 @@ public class PlayerHard implements Player {
         }
         return 0; // Should be 0. Temp set to 5 so I can see when this method returns this statement.
     }
-    public int checkScoreAll(int[][] board) {
+    public int checkScoreAll(int[][] board, int depth) {
         for (int col = 0; col < board.length; col++) {
             for (int row = 0; row < board[0].length; row++) {
                 if (board[col][row] == currentPlayer && Board.winningMove(board, col, row, currentPlayer)) {
-                    return 20;
+                    if (depth == depthTarget - 1) {
+                        System.out.println("-------");
+                        System.out.println("depth: " + depth + " win: ");
+                        Board.terminalDisplayBoard(board);
+                        System.out.println("-------");
+                    }
+                    return  (depth + 1);
                 }
                 if (board[col][row] == oppositionPlayer && Board.winningMove(board, col, row, oppositionPlayer)) {
-                    return -20;
+                    if (depth == depthTarget - 1) {
+                        System.out.println("-------");
+                        System.out.println("depth: " + depth + " lose: ");
+                        Board.terminalDisplayBoard(board);
+                        System.out.println("-------");
+                    }
+                    return - (depth + 1);
                 }
 //                if (board[col][row] == currentPlayer && Board.checkMove(board, col, row, currentPlayer)) {
 //                    return 10;

@@ -5,12 +5,15 @@ public class GameActions {
     public static Connect4Game setPlayers(Connect4Game game, int p1, int p2) {
         switch (p1) {
             case (0):
-//                System.out.println("Player One is Human");
                 game.playerOneType = 0;
                 break;
             case (1):
                 game.one = new PlayerEasy();
                 game.playerOneType = 1;
+                break;
+            case (2):
+                game.one = new PlayerMedium();
+                game.playerOneType = 2;
                 break;
             case (3):
                 game.one = new PlayerHard();
@@ -18,18 +21,20 @@ public class GameActions {
         }
         switch (p2) {
             case (0):
-//                System.out.println("Player Two is Human");
                 game.playerTwoType = 0;
                 break;
             case (1):
                 game.two = new PlayerEasy();
                 game.playerTwoType = 1;
                 break;
+            case (2):
+                game.two = new PlayerMedium();
+                game.playerTwoType = 2;
+                break;
             case (3):
                 game.two = new PlayerHard();
                 game.playerTwoType = 3;
                 break;
-            // cases for 2 & 3;
         }
         return game;
     }
@@ -64,17 +69,12 @@ public class GameActions {
     }
 
     public static Connect4Game requestMove(Connect4Game game, int playerNumber) {
-//        System.out.println("requestMove. Player: " + playerNumber);
+//        System.out.println("requestMove. Player: " + playerNumber); // *** TEMP ***
         if (!game.inProgress) {
             return game;
         }
-        int[] index = playerNumber == 1 ? game.one.makeMove(game.board, playerNumber) : game.two.makeMove(game.board, playerNumber);
-//        if (index[0] == -1) {
-//            game.gameOver = true;
-//            game.inProgress = false;
-//            game.error = "Game Over. It's a draw!";
-//            return game;
-//        }
+        int[] index = playerNumber == 1 ? game.one.makeMove(game.board, game.latestMove, playerNumber) : game.two.makeMove(game.board, game.latestMove, playerNumber);
+
         if (Board.winningMove(game.board, index[0], index[1], playerNumber)) {
             game.gameOver = true;
             game.inProgress = false;
@@ -110,11 +110,17 @@ public class GameActions {
     public static Connect4Game resetBoard(Connect4Game game) {
         game.setLatestMove(new int[] {-1, -1});
         game.setBoard(new int[7][6]);
-//  *** The below is required to test and fully reset.
+
+        /*
+        The following lines are used to initialise the board using one of the test boards
+        in the TestBoards class. For a normal game to function, these lines are
+        commented out.
+         */
+
 //        TestBoards testBoardInstance = new TestBoards();
-//        int[][] test = testBoardInstance.testH5;
+//        int[][] test = testBoardInstance.testH8;
 //        game.setBoard(test);
-// ***
+
         game.error = "Select Players to start game. Yellow goes first."; // this hasn't worked!!
         game.currentPlayer = 1;
         game.gameOver = false;

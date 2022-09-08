@@ -42,7 +42,7 @@ export default function SelectPlayer(props) {
             </MenuItem>
             <MenuItem value={0}>Human</MenuItem>
             <MenuItem value={1}>Easy</MenuItem>
-            <MenuItem disabled value={2}>Medium</MenuItem>
+            <MenuItem value={2}>Medium</MenuItem>
             <MenuItem value={3}>Hard</MenuItem>
         </Select>
       </ThemeProvider>

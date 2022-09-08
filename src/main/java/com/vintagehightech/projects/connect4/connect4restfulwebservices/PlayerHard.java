@@ -2,56 +2,94 @@ package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 import java.util.Arrays;
 
 public class PlayerHard implements Player {
-
     int currentPlayer;
     int oppositionPlayer;
-    final int depthTarget = 5;
+    final int depthTarget = 8;
+    boolean firstMove = true;
 
-    public int[] makeMove(int[][] board, int playerNumber) {
+    public int[] makeMove(int[][] board, int[] latestMove, int playerNumber) {
         System.out.println("Hard Level Move");
+
+        if (firstMove) {
+            int column = SimpleMoves.bestFirstMove(board, playerNumber);
+            firstMove = false;
+            board[column][0] = playerNumber;
+            return new int[] {column, 0};
+        }
+
+        // *** Check board for potential win or potential block move:
+        int[] checkWinOrBlock = Board.potentialWin(board, playerNumber);
+        if (checkWinOrBlock[0] != -1) {
+            board[checkWinOrBlock[0]][checkWinOrBlock[1]] = playerNumber;
+            return checkWinOrBlock;
+        }
+
+        /*
+        Set global variables for current player and opposition to avoid
+        passing values between methods.
+          */
         this.currentPlayer = playerNumber;
         this.oppositionPlayer = playerNumber == 1 ? 2 : 1;
 
+        /*
+        Do we need the copy of the board??
+         */
         int[][] tempBoard = Arrays.copyOf(board, board.length);
-//        Board.terminalDisplayBoard(tempBoard);
 
         int bestScore = Integer.MIN_VALUE;
         int[] bestMove = {-1, -1};
+        int[] allScores = new int[7];
 
         for (int i = 0; i <= 6; i++) {
             for (int j = 0; j <= 5; j++) {
                 if (tempBoard[i][j] == 0) {
                     tempBoard[i][j] = playerNumber;
-                    int score = minimax(tempBoard, depthTarget, Integer.MIN_VALUE, Integer.MAX_VALUE,  false);
-                    System.out.println("Column " + i + ": score = " + score);
-
+                    int score = minimax(
+                            tempBoard,
+                            depthTarget,
+                            Integer.MIN_VALUE,
+                            Integer.MAX_VALUE,
+                            new int[] {i, j},
+                            false);
+//                    System.out.println("Column " + i + ": score = " + score); // *** TEMP ***
                     tempBoard[i][j] = 0;
+                    allScores[i] = score;
+
                     if (score > bestScore) {
                         bestMove = new int[]{i, j};
                         bestScore = score;
+
                     }
                     break;
                 }
             }
         }
-        System.out.println("bestMove = " + Arrays.toString(bestMove));
 
-//        PlayerEasy temp = new PlayerEasy();
-//        return temp.makeMove(board, playerNumber);
+        if (allScoresAreEqual(allScores)) {
+            bestMove = SimpleMoves.simpleMove(board, latestMove, playerNumber);
+        }
+
+//        System.out.println("bestMove = " + Arrays.toString(bestMove)); // *** TEMP ***
+//        System.out.println("All scores: " + Arrays.toString(allScores)); // *** TEMP ***
+
         board[bestMove[0]][bestMove[1]] = playerNumber;
         return bestMove;
     }
 
-    public int minimax(int[][] board, int depth, int alpha, int beta, boolean isMax) {
-//        int score = checkScore(board, coordinates[0], coordinates[1], player);
-        int score = checkScoreAll(board, depth);
+    public int minimax(int[][] board, int depth, int alpha, int beta, int[] coordinates, boolean isMax) {
+
+        int score = endStateScore(board, depth, coordinates[0], coordinates[1], isMax);
+
         if (depth <= 0) {
             return score;
         }
         if (Board.boardFull(board)) {
-           return 0;
+            return 0;
         }
-        if (score == depthTarget || score == -depthTarget) {
+        if (score == depth + 1){
+            return score;
+        }
+        if (score == - (depth + 1)){
             return score;
         }
         if (isMax) {
@@ -60,103 +98,80 @@ public class PlayerHard implements Player {
                 for (int j = 0; j <= 5; j++) {
                     if (board[i][j] == 0) {
                         board[i][j] = currentPlayer;
-                        best = Math.max(best, minimax(board, depth - 1, alpha, beta, false));
-//                        System.out.println("max");
-
-
-//                        Board.terminalDisplayBoard(board); // ******** TEMP
-//                        System.out.println("Score for Max = " + checkScore(board, i, j, true)); // TEMP
-//                        System.out.println("Score for Min = " + checkScore(board, i, j, false)); // TEMP
-
+                        best = Math.max(
+                                best,
+                                minimax(
+                                        board,
+                                        depth - 1,
+                                        alpha,
+                                        beta,
+                                        new int[] {i, j},
+                                        false
+                                ));
                         board[i][j] = 0;
                         break;
                     }
                 }
-//                alpha = Math.max(alpha, best);
-//                if (beta <= alpha) {
-//                    break;
-//                }
+                alpha = Math.max(alpha, best);
+                if (beta <= alpha) {
+                    break;
+                }
             }
-//            System.out.println("Maximise Best = " + best);
+//            System.out.println("Maximise Best = " + best); // *** TEMP ***
             return best;
         } else {
             int best = Integer.MAX_VALUE;
-//            int oppPlayer = player == 1 ? 2 : 1;
             for (int i = 0; i <= 6; i++) {
                 for (int j = 0; j <= 5; j++) {
                     if (board[i][j] == 0) {
                         board[i][j] = oppositionPlayer;
-                        best = Math.min(best, minimax(board, depth - 1, alpha, beta, true));
-//                        System.out.println("min");
-
-//                        Board.terminalDisplayBoard(board); // ******** TEMP
-//                        System.out.println("Score for Max = " + checkScore(board, i, j, true)); // TEMP
-//                        System.out.println("Score for Min = " + checkScore(board, i, j, false)); // TEMP
-
+                        best = Math.min(
+                                best,
+                                minimax(
+                                        board,
+                                        depth - 1,
+                                        alpha,
+                                        beta,
+                                        new int[] {i, j},
+                                        true
+                                ));
                         board[i][j] = 0;
                         break;
                     }
                 }
-//                beta = Math.min(beta, best);
-//                if (beta <= alpha) {
-//                    break;
-//                }
+                beta = Math.min(beta, best);
+                if (beta <= alpha) {
+                    break;
+                }
             }
-//            System.out.println("Minimise Best = " + best);
+//            System.out.println("Minimise Best = " + best); // *** TEMP ***
             return best;
         }
-
-//        return 0; // **** TEMP *****
     }
-//
-    public int checkScore(int[][] board, int col, int row, int player) {
+
+    public int endStateScore(int[][] board, int depth, int col, int row, boolean isMax) {
+        int player = isMax ? oppositionPlayer : currentPlayer;
+
         if (player == currentPlayer) {
             if (Board.winningMove(board, col, row, player)) {
-                return 20;
-            }
-            if (Board.checkMove(board, col, row, player)) {
-                return 10;
+                return depth + 1;
             }
         }
         if (player == oppositionPlayer) {
             if (Board.winningMove(board, col, row, player)) {
-                return -20;
-            }
-            if (Board.checkMove(board, col, row, player)) {
-                return -10;
-            }
-        }
-        return 0; // Should be 0. Temp set to 5 so I can see when this method returns this statement.
-    }
-    public int checkScoreAll(int[][] board, int depth) {
-        for (int col = 0; col < board.length; col++) {
-            for (int row = 0; row < board[0].length; row++) {
-                if (board[col][row] == currentPlayer && Board.winningMove(board, col, row, currentPlayer)) {
-                    if (depth == depthTarget - 1) {
-                        System.out.println("-------");
-                        System.out.println("depth: " + depth + " win: ");
-                        Board.terminalDisplayBoard(board);
-                        System.out.println("-------");
-                    }
-                    return  (depth + 1);
-                }
-                if (board[col][row] == oppositionPlayer && Board.winningMove(board, col, row, oppositionPlayer)) {
-                    if (depth == depthTarget - 1) {
-                        System.out.println("-------");
-                        System.out.println("depth: " + depth + " lose: ");
-                        Board.terminalDisplayBoard(board);
-                        System.out.println("-------");
-                    }
-                    return - (depth + 1);
-                }
-//                if (board[col][row] == currentPlayer && Board.checkMove(board, col, row, currentPlayer)) {
-//                    return 10;
-//                }
-//                if (board[col][row] == oppositionPlayer && Board.checkMove(board, col, row, oppositionPlayer)) {
-//                    return -10;
-//                }
+                return - (depth + 1);
             }
         }
         return 0;
+    }
+
+    public boolean allScoresAreEqual(int[] scores) {
+        int firstDigit = scores[0];
+        for (int i = 1; i < scores.length; i++) {
+            if (scores[i] != firstDigit) {
+                return false;
+            }
+        }
+        return true;
     }
 }

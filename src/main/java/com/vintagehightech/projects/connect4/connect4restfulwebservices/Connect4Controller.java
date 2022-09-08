@@ -60,7 +60,7 @@ public class Connect4Controller {
 //        System.out.println((Connect4Game) request.getSession().getAttribute("game")); // *** TEMP ***
         Connect4Game temp = new Connect4Game();
         if (request.getSession().getAttribute("game") != null) {
-//            System.out.println("stored game is not null");
+//            System.out.println("stored game is not null"); // *** TEMP ***
             temp = (Connect4Game) request.getSession().getAttribute("game");
         }
 //

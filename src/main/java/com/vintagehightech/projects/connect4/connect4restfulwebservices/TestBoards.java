@@ -93,7 +93,12 @@ public class TestBoards {
                     {2,1,2,2,1,0},
                     {1,2,1,1,2,0}
             };
-    // ** BELOW TESTS are for the 'Hard' level to ensure the minimax scores are assessed correctly
+    /*
+     *** BELOW TESTS are for the 'Hard' level to ensure the minimax scores are assessed correctly. ***
+     To use these tests, the initial "if (firstMove)" statement at the beginning of the makeMove
+     method in the PlayerHard class must be commented out. Failure to do this will result in an
+     IndexOutOfBounds exception.
+     */
 
     int[][] testH1 = new int[][]
             {
@@ -144,5 +149,35 @@ public class TestBoards {
                     {2,2,1,0,0,0},
                     {2,1,2,2,0,0},
                     {1,0,0,0,0,0}
+            };
+    int[][] testH6 = new int[][]
+            {
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {2,1,0,0,0,0},
+                    {1,2,2,0,0,0},
+                    {1,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0}
+            };
+    int[][] testH7 = new int[][]
+            {
+                    {0,0,0,0,0,0},
+                    {2,1,2,1,2,0},
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {2,1,2,1,2,0},
+                    {0,0,0,0,0,0}
+            };
+    int[][] testH8 = new int[][]
+            {
+                    {2,1,2,1,2,0},
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {2,1,2,1,2,0},
             };
 }

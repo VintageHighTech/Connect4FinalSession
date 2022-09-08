@@ -1,35 +1,27 @@
 package com.vintagehightech.projects.connect4.connect4restfulwebservices;
+
 import java.util.Random;
 
-public class PlayerEasy implements Player {
-
+public class PlayerMedium implements Player {
     Random ran = new Random();
     boolean firstMove = true;
-    int blockOrWinCount = 0;
 
     public int[] makeMove(int[][] board, int[] latestMove, int playerNumber) {
-//        System.out.println("Easy Level");
-
+//        System.out.println("Medium Player");
         if (firstMove) {
             int column = SimpleMoves.bestFirstMove(board, playerNumber);
             firstMove = false;
             board[column][0] = playerNumber;
-            return new int[]{column, 0};
+            return new int[] {column, 0};
         }
 
         boolean successfulMove = false;
-
         int columnIndex = -1;
-
-        if (blockOrWinCount < 2) {
-            int[] strategicMove = Board.potentialWin(board, playerNumber);
-            if (strategicMove[0] != -1 && blockOrWinCount < 2) {
-                board[strategicMove[0]][strategicMove[1]] = playerNumber;
-                blockOrWinCount++;
-                return strategicMove;
-            }
+        int[] strategicMove = Board.potentialWin(board, playerNumber);
+        if (strategicMove[0] != -1) {
+            board[strategicMove[0]][strategicMove[1]] = playerNumber;
+            return strategicMove;
         }
-
         while (!successfulMove) { // this could just be "while(true)" - successfulMove is never used
             columnIndex = ran.nextInt(7); // Selects any random column
             for (int i = 0; i <= 5; i++) {

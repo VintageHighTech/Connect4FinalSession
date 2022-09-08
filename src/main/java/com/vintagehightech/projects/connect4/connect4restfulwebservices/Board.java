@@ -6,9 +6,10 @@ public class Board {
     // This is just a reference class - no instances will be made
 
     public static boolean winningMove(int[][] board, int col,int row, int player) {
-//        System.out.println("Column " + col + "; Element " + row); // *** TEMP ***
-        /*Below generates 2D array, each line represents the current state of vertical, horizontal
-          & both diagonals around the disc that was last added to the board
+
+        /*
+          The below generates a 2D array. Each line of the array represents the state of the
+          board for the horizontal, vertical & diagonals centred around the last move made.
         */
         int[][] win = new int[4][7];
         int x = - 3;
@@ -29,7 +30,6 @@ public class Board {
                 if (disc == player) {
                     winCount++;
                     if (winCount == 4) {
-//                        System.out.println("We have a winner! " + player); // *** TEMP ***
                         return true;
                     }
                 } else {
@@ -45,10 +45,10 @@ public class Board {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
                 if (board[i][j] == 0) {
-                    if (checkMove(board, i, j, player)) {
+                    if (checkMove(board, i, j, 3, player)) {
                         return new int[] {i, j};
                     } else {
-                        if (checkMove(board, i, j, player == 1 ? 2 : 1)) {
+                        if (checkMove(board, i, j, 3, player == 1 ? 2 : 1)) {
                            blockingMove = new int[] {i, j};
                         }
                     }
@@ -59,7 +59,7 @@ public class Board {
         return blockingMove;
     }
 
-    public static boolean checkMove(int[][] board ,int col, int row, int player) {
+    public static boolean checkMove(int[][] board ,int col, int row, int targetCount, int player) {
         int[][] win = new int[4][7];
         int x = - 3;
         for (int i = 0; i < 7; i++) {
@@ -79,11 +79,11 @@ public class Board {
             for (int i = 0; i < line.length; i++) {
                 if (line[i] == player) {
                     winCount++;
-                    if (winCount == 3) {
+                    if (winCount == targetCount) {
 //                        System.out.println("Best move is: " + col); // *** TEMP ***
                         return true;
                     }
-                } else if (i != 3){ // i.e. ignore the zero in the centre of each 'line'
+                } else if (i != 3){ // i.e. ignore the zero in the centre of each line.
                     winCount = 0;
                 }
             }

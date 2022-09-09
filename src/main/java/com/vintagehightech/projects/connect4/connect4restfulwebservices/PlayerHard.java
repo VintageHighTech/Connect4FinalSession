@@ -21,6 +21,7 @@ public class PlayerHard implements Player {
         int[] checkWinOrBlock = Board.potentialWin(board, playerNumber);
         if (checkWinOrBlock[0] != -1) {
             board[checkWinOrBlock[0]][checkWinOrBlock[1]] = playerNumber;
+            System.out.println("Blocked by Hard!");
             return checkWinOrBlock;
         }
 
@@ -32,7 +33,7 @@ public class PlayerHard implements Player {
         this.oppositionPlayer = playerNumber == 1 ? 2 : 1;
 
         /*
-        Do we need the copy of the board??
+        Do we need to copy the board??
          */
         int[][] tempBoard = Arrays.copyOf(board, board.length);
 

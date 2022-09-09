@@ -91,6 +91,81 @@ public class Board {
         return false;
     }
 
+    public static boolean checkNeighbours(int[][] board ,int col, int row, int targetCount, int player) {
+        int[][] lines = new int[4][7];
+        int x = - 3;
+        for (int i = 0; i < 7; i++) {
+            lines[0][i] = row + x >= 0 && row + x < 6 ? board[col][row + x] : 0;
+            lines[1][i] = col + x >= 0 && col + x < 7 ? board[col + x][row] : 0;
+            lines[2][i] = row + x >= 0 && row + x < 6 && col + x >= 0 && col + x < 7 ? board[col + x][row + x] : 0;
+            lines[3][i] = row - x >= 0 && row - x < 6 && col + x >= 0 && col + x < 7 ? board[col + x][row - x] : 0;
+            x++;
+        }
+        for (int[] line: lines) {
+            int count = 0;
+            for (int i = 2; i > 0 ; i--) {
+                if (line[i] != player) {
+                    break;
+                }
+                count++;
+            }
+            for (int i = 4; i < 6 ; i++) {
+                if (line[i] != player) {
+                    break;
+                }
+                count++;
+            }
+            if (count >= targetCount) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean checkImmediateNeighbours(int[][] board ,int col, int row, int player) {
+        if (col - 1 >= 0 && board[col - 1][row] == player) {
+            return true;
+        }
+        if (col + 1 <= 6 && board[col + 1][row] == player) {
+            return true;
+        }
+        if (row - 1 >= 0 && board[col][row - 1] == player) {
+            return true;
+        }
+        if (row - 1 >= 0 && col - 1 >= 0 && board[col - 1][row - 1] == player) {
+            return true;
+        }
+        if (row - 1 >= 0 && col + 1 <= 6 && board[col + 1][row - 1] == player) {
+            return true;
+        }
+        return false;
+    }
+
+    public static int mostNeighbours(int[][] board ,int col, int row, int player) {
+        int count = 0;
+        if (col - 1 >= 0 && row + 1 <= 5 && board[col - 1][row + 1] == player) {
+            count++;
+        }
+        if (col - 1 >= 0 && board[col - 1][row] == player) {
+            count++;
+        }
+        if (col - 1 >= 0 && row -1 >= 0 && board[col - 1][row - 1] == player) {
+            count++;
+        }
+        if (row - 1 >= 0 && board[col][row - 1] == player) {
+            count++;
+        }
+        if (col + 1 <= 6 && row - 1 >= 0 && board[col + 1][row - 1] == player) {
+            count++;
+        }
+        if (col + 1 <= 6 && board[col + 1][row] == player) {
+            count++;
+        }
+        if (col + 1 <= 6 && row + 1 <= 5 && board[col + 1][row + 1] == player) {
+            count++;
+        }
+        return count;
+    }
+
     public static boolean boardFull(int[][] board) {
         for (int[] column : board) {
             if (column[5] == 0) {

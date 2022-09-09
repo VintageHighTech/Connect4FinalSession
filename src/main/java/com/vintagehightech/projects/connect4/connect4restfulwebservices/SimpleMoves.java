@@ -1,7 +1,10 @@
 package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 import java.util.Arrays;
+import java.util.Random;
 
 public class SimpleMoves {
+
+    static Random ran = new Random();
 
     static final int[][] oppositionIsOne = {
     //       0, 1, 2, 3, 4, 5, 6
@@ -54,6 +57,12 @@ public class SimpleMoves {
 
     public static int[] simpleMove(int[][] board, int[] latestMove, int playerNumber) {
 
+        int[] possibleMove = nextBestMove(board, playerNumber == 1 ? 2 : 1);
+        if (possibleMove[0] != -1) {
+            System.out.println("Returning next best move");
+            return possibleMove;
+        }
+
         if (latestMove[1] < 5 && board[latestMove[0]][latestMove[1] + 1] == 0) {
             return new int[] {latestMove[0], latestMove[1] + 1};
         }
@@ -81,5 +90,39 @@ public class SimpleMoves {
             }
             right++;
         }
+    }
+
+    public static int[] nextBestMove(int[][] board, int player) {
+        int bestScore = 0;
+        int[] bestMove = {-1, -1};
+        int tempScore;
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (board[i][j] == 0) {
+                    tempScore = Board.mostNeighbours(board, i, j, player);
+                    if (tempScore > bestScore) {
+                        bestScore = tempScore;
+                        bestMove[0] = i;
+                        bestMove[1] = j;
+                    }
+                    break;
+                }
+            }
+        }
+//        System.out.println("Best Score : " + bestScore); // *** TEMP ***
+        return bestMove;
+
+//        for (int i = 0; i < 7; i++) { // TURN THIS ONE BACK ON!!
+//            for (int j = 0; j < 6; j++) {
+//                if (board[i][j] == 0) {
+//                    if (Board.checkNeighbours(board, i, j, 2, player))  {
+//                        return new int[] {i, j};
+//                    }
+//                    break;
+//                }
+//            }
+//        }
+//        return new int[] {-1, -1};
     }
 }

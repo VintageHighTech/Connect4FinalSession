@@ -118,7 +118,7 @@ public class GameActions {
          */
 
 //        TestBoards testBoardInstance = new TestBoards();
-//        int[][] test = testBoardInstance.testH8;
+//        int[][] test = testBoardInstance.testH9;
 //        game.setBoard(test);
 
         game.error = "Select Players to start game. Yellow goes first."; // this hasn't worked!!
@@ -127,5 +127,4 @@ public class GameActions {
         game.inProgress = false;
         return game;
     }
-
 }

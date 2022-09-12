@@ -1,5 +1,7 @@
 package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class SimpleMoves {
@@ -55,74 +57,38 @@ public class SimpleMoves {
         return bestMove;
     }
 
-    public static int[] simpleMove(int[][] board, int[] latestMove, int playerNumber) {
-
-        int[] possibleMove = nextBestMove(board, playerNumber == 1 ? 2 : 1);
-        if (possibleMove[0] != -1) {
-            System.out.println("Returning next best move");
-            return possibleMove;
-        }
-
-        if (latestMove[1] < 5 && board[latestMove[0]][latestMove[1] + 1] == 0) {
-            return new int[] {latestMove[0], latestMove[1] + 1};
-        }
-
-        int left = latestMove[0] - 1;
-        int right = latestMove[0] + 1;
-
-        while (true) {
-
-            if (left >= 0) {
-                for (int i = 0; i <= 5; i++) {
-                    if (board[left][i] == 0) {
-                        return new int[]{left, i};
-                    }
-                }
-            }
-            left--;
-
-            if (right <= 6) {
-                for (int i = 0; i <= 5; i++) {
-                    if (board[right][i] == 0) {
-                        return new int[]{right, i};
-                    }
-                }
-            }
-            right++;
-        }
-    }
-
-    public static int[] nextBestMove(int[][] board, int player) {
-        int bestScore = 0;
+    public static int[] nextBestMove(int[][] board, HashMap<List<Integer>, Integer> positions, int targetScore, int player) {
         int[] bestMove = {-1, -1};
+        int column;
+        int row;
         int tempScore;
+        int bestScore = Integer.MIN_VALUE;
 
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 6; j++) {
-                if (board[i][j] == 0) {
-                    tempScore = Board.mostNeighbours(board, i, j, player);
-                    if (tempScore > bestScore) {
-                        bestScore = tempScore;
-                        bestMove[0] = i;
-                        bestMove[1] = j;
-                    }
-                    break;
+        System.out.println("Scores from nextBestMove"); // *** TEMP ***
+        System.out.println("------------------------"); // *** TEMP ***
+
+        for (var score : positions.entrySet()) {
+            if (score.getValue() == targetScore) {
+                column = score.getKey().get(0);
+                row = score.getKey().get(1);
+
+                if (Board.checkNeighbours(board, column, row, player == 1 ? 2 : 1))  {
+                    System.out.println("Returned best move = [" + column + ", " + row + "]"); // *** TEMP ***
+                    return new int[] {column, row};
+                }
+
+                tempScore = Board.mostNeighbours(board, column, row, player == 1 ? 2 : 1);
+                System.out.printf("score: %d, move: %d,%d%n", tempScore, column, row); // *** TEMP ***
+
+                if (tempScore > bestScore) {
+                    bestMove = new int[] {column, row};
+                    bestScore = tempScore;
                 }
             }
         }
-//        System.out.println("Best Score : " + bestScore); // *** TEMP ***
-        return bestMove;
+        System.out.println("Returned best move = " + Arrays.toString(bestMove)); // *** TEMP ***
+        System.out.println("--------------------------"); // *** TEMP ***
 
-//        for (int i = 0; i < 7; i++) { // TURN THIS ONE BACK ON!!
-//            for (int j = 0; j < 6; j++) {
-//                if (board[i][j] == 0) {
-//                    if (Board.checkNeighbours(board, i, j, 2, player))  {
-//                        return new int[] {i, j};
-//                    }
-//                    break;
-//                }
-//            }
-//        }
-//        return new int[] {-1, -1};
+        return bestMove;
     }
 }

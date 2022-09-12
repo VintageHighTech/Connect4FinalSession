@@ -91,7 +91,7 @@ public class Board {
         return false;
     }
 
-    public static boolean checkNeighbours(int[][] board ,int col, int row, int targetCount, int player) {
+    public static boolean checkNeighbours(int[][] board ,int col, int row, int player) {
         int[][] lines = new int[4][7];
         int x = - 3;
         for (int i = 0; i < 7; i++) {
@@ -115,27 +115,9 @@ public class Board {
                 }
                 count++;
             }
-            if (count >= targetCount) {
+            if (count >= 2) {
                 return true;
             }
-        }
-        return false;
-    }
-    public static boolean checkImmediateNeighbours(int[][] board ,int col, int row, int player) {
-        if (col - 1 >= 0 && board[col - 1][row] == player) {
-            return true;
-        }
-        if (col + 1 <= 6 && board[col + 1][row] == player) {
-            return true;
-        }
-        if (row - 1 >= 0 && board[col][row - 1] == player) {
-            return true;
-        }
-        if (row - 1 >= 0 && col - 1 >= 0 && board[col - 1][row - 1] == player) {
-            return true;
-        }
-        if (row - 1 >= 0 && col + 1 <= 6 && board[col + 1][row - 1] == player) {
-            return true;
         }
         return false;
     }
@@ -175,6 +157,7 @@ public class Board {
         return true;
     }
 
+    // The below are for testing only.
     public static void terminalDisplay2dArray(int[][] data, String note) {
         System.out.println("..................");
         System.out.println("\n" + note);

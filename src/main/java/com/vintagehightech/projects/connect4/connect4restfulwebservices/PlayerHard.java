@@ -1,14 +1,21 @@
 package com.vintagehightech.projects.connect4.connect4restfulwebservices;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class PlayerHard implements Player {
     int currentPlayer;
     int oppositionPlayer;
     final int depthTarget = 8;
     boolean firstMove = true;
+    HashMap<List<Integer>, Integer> positions = new HashMap<>(7);
+    HashMap<List<Integer>, Integer> refinedPositions = new HashMap<>(7);
+
+
 
     public int[] makeMove(int[][] board, int[] latestMove, int playerNumber) {
-        System.out.println("Hard Level Move");
+//        System.out.println("Hard Level Move");
 
         if (firstMove) {
             int column = SimpleMoves.bestFirstMove(board, playerNumber);
@@ -21,7 +28,9 @@ public class PlayerHard implements Player {
         int[] checkWinOrBlock = Board.potentialWin(board, playerNumber);
         if (checkWinOrBlock[0] != -1) {
             board[checkWinOrBlock[0]][checkWinOrBlock[1]] = playerNumber;
-            System.out.println("Blocked by Hard!");
+            System.out.println("----------------"); // *** TEMP ***
+            System.out.println("Blocked by Hard!"); // *** TEMP ***
+            System.out.println("----------------"); // *** TEMP ***
             return checkWinOrBlock;
         }
 
@@ -41,6 +50,10 @@ public class PlayerHard implements Player {
         int[] bestMove = {-1, -1};
         int[] allScores = new int[7];
 
+        System.out.println("--------------------------"); // *** TEMP ***
+        System.out.println("Scores from HARD top level"); // *** TEMP ***
+        System.out.println("--------------------------"); // *** TEMP ***
+
         for (int i = 0; i <= 6; i++) {
             for (int j = 0; j <= 5; j++) {
                 if (tempBoard[i][j] == 0) {
@@ -52,27 +65,32 @@ public class PlayerHard implements Player {
                             Integer.MAX_VALUE,
                             new int[] {i, j},
                             false);
-//                    System.out.println("Column " + i + ": score = " + score); // *** TEMP ***
+                    System.out.println("Column " + i + ": score = " + score); // *** TEMP ***
                     tempBoard[i][j] = 0;
-                    allScores[i] = score;
-
+                    allScores[i] = score; // *** TO DELETE ***
+                    List<Integer> temp = new ArrayList<>(2);
+                    temp.add(i);
+                    temp.add(j);
+                    positions.put(temp, score);
                     if (score > bestScore) {
-                        bestMove = new int[]{i, j};
+//                        bestMove = new int[]{i, j};
                         bestScore = score;
-
                     }
                     break;
                 }
             }
         }
 
-        if (allScoresAreEqual(allScores)) {
-            bestMove = SimpleMoves.simpleMove(board, latestMove, playerNumber);
-        }
+        System.out.println("--------------------------"); // *** TEMP ***
+
+        bestMove = SimpleMoves.nextBestMove(board, positions, bestScore, playerNumber);
+
+//        bestMove = shallowMinimax(board, positions, bestScore, playerNumber);
 
 //        System.out.println("bestMove = " + Arrays.toString(bestMove)); // *** TEMP ***
 //        System.out.println("All scores: " + Arrays.toString(allScores)); // *** TEMP ***
 
+        positions.clear();
         board[bestMove[0]][bestMove[1]] = playerNumber;
         return bestMove;
     }
@@ -164,15 +182,5 @@ public class PlayerHard implements Player {
             }
         }
         return 0;
-    }
-
-    public boolean allScoresAreEqual(int[] scores) {
-        int firstDigit = scores[0];
-        for (int i = 1; i < scores.length; i++) {
-            if (scores[i] != firstDigit) {
-                return false;
-            }
-        }
-        return true;
     }
 }

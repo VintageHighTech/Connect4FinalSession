@@ -3,14 +3,17 @@ package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 import java.util.Arrays;
 
 public class Board {
-    // This is just a reference class - no instances will be made
+    /*
+    This class only contains methods to process the board e.g. determine if the last move was a winning move.
+     */
 
-    public static boolean winningMove(int[][] board, int col,int row, int player) {
+    public static boolean isWinningMove(int[][] board, int col, int row, int player, boolean saveWin) {
 
         /*
           The below generates a 2D array. Each line of the array represents the state of the
           board for the horizontal, vertical & diagonals centred around the last move made.
         */
+        int winCount = 0;
         int[][] win = new int[4][7];
         int x = - 3;
         for (int i = 0; i < 7; i++) {
@@ -24,12 +27,15 @@ public class Board {
         /*
         Below analyses each line of the 'win' 2D array to see if any line contains 4 consecutive discs
          */
-        for (int[] line : win) {
-            int winCount = 0;
-            for (int disc : line) {
-                if (disc == player) {
+        for (int i = 0; i < win.length; i++) {
+            winCount = 0;
+            for (int j = 0; j < win[0].length; j++) {
+                if (win[i][j] == player) {
                     winCount++;
                     if (winCount == 4) {
+                        if (saveWin) {
+                            displayWin(board, win[i], i, new int[] {col, row}, player);
+                        }
                         return true;
                     }
                 } else {
@@ -40,7 +46,7 @@ public class Board {
         return false;
     }
 
-    public static int[] potentialWin(int[][] board, int player) {
+    public static int[] potentialWinOrBlock(int[][] board, int player) {
         int[] blockingMove = new int[] {-1, -1};
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
@@ -122,7 +128,7 @@ public class Board {
         return false;
     }
 
-    public static int mostNeighbours(int[][] board ,int col, int row, int player) {
+    public static int hasMostNeighbours(int[][] board , int col, int row, int player) {
         int count = 0;
         if (col - 1 >= 0 && row + 1 <= 5 && board[col - 1][row + 1] == player) {
             count++;
@@ -148,7 +154,7 @@ public class Board {
         return count;
     }
 
-    public static boolean boardFull(int[][] board) {
+    public static boolean boardIsFull(int[][] board) {
         for (int[] column : board) {
             if (column[5] == 0) {
                 return false;
@@ -157,7 +163,49 @@ public class Board {
         return true;
     }
 
-    // The below are for testing only.
+    public static void displayWin(int[][] board, int[] winLine, int lineNum, int[] coordinates, int player) {
+        int col = coordinates[0];
+        int row = coordinates[1];
+        int winPlayer = player == 1 ? 3 : 4;
+
+        int[][] checkLine = new int[7][2];
+
+        switch (lineNum) {
+            case 0:
+                checkLine = new int[][] {{0, -3}, {0, -2}, {0, -1}, {0, 0}, {0, 1}, {0, 2}, {0, 3}};
+                break;
+            case 1:
+                checkLine = new int[][] {{-3, 0}, {-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0}, {3, 0}};
+                break;
+            case 2:
+                checkLine = new int[][] {{-3, -3}, {-2, -2}, {-1, -1}, {0, 0}, {1, 1}, {2, 2}, {3, 3}};
+                break;
+            case 3:
+                checkLine = new int[][] {{-3, 3}, {-2, 2}, {-1, 1}, {0, 0}, {1, -1}, {2, -2}, {3, -3}};
+                break;
+        }
+
+        board[col][row] = winPlayer;
+
+        for (int i = 2; i >= 0; i--) {
+            if (winLine[i] == player) {
+                board[col + checkLine[i][0]][row + checkLine[i][1]] = winPlayer;
+            } else {
+                break;
+            }
+        }
+
+        for (int i = 4; i < winLine.length; i++) {
+            if (winLine[i] == player) {
+                board[col + checkLine[i][0]][row + checkLine[i][1]] = winPlayer;
+            } else {
+                break;
+            }
+        }
+    }
+
+    // The below methods are for testing only.
+
     public static void terminalDisplay2dArray(int[][] data, String note) {
         System.out.println("..................");
         System.out.println("\n" + note);

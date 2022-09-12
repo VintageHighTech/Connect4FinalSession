@@ -33,7 +33,7 @@ export default function ConnectBoard(props) {
           align: 'center',
           width: 378,
           height: 325,
-          backgroundColor: '#0079ff'
+          backgroundColor: '#425859'
         }}
       >
         <Grid container direction="row" justifyContent="center" style={{ gap: 5 }}>

@@ -1,24 +1,29 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-// NOTE: Colours changed to new UI theme
-const discTheme = createTheme({
-  palette: {
-    info: {
-      main: '#282c34'
-    },
-    primary: {
-      main: '#ffdf33'
-    },
-    secondary:{
-      main: '#ff3333'
-    },
-  }
-});
+import { ThemeProvider } from '@mui/material/styles';
+import { discTheme } from '../muiStyleElements';
 
 function Disc(props) {
-  let discColor = props.color === 0 ? "info" : props.color === 1 ? "primary" : "secondary";
+  
+  let discColor = 0;
+
+  switch(props.color) {
+    case 0:
+      discColor = "info";
+      break;
+    case 1:
+      discColor = "player1";
+      break;
+    case 2:
+      discColor = "player2";
+      break;
+    case 3:
+      discColor = "player1Win";
+      break;
+    case 4:
+      discColor = "player2Win";
+      break;
+  }
 
   return (
     <ThemeProvider theme={discTheme}>

@@ -93,6 +93,17 @@ public class TestBoards {
                     {2,1,2,2,1,0},
                     {1,2,1,1,2,0}
             };
+
+    int[][] ui1 = new int[][]
+            {
+                    {0,0,0,0,0,0},
+                    {0,0,0,0,0,0},
+                    {1,1,1,0,0,0},
+                    {1,1,1,0,0,0},
+                    {2,2,2,0,0,0},
+                    {2,2,2,0,0,0},
+                    {0,0,0,0,0,0}
+            };
     /*
      *** BELOW TESTS are for the 'Hard' level to ensure the minimax scores are assessed correctly. ***
      To use these tests, the initial "if (firstMove)" statement at the beginning of the makeMove

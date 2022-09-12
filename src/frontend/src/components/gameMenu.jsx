@@ -32,7 +32,7 @@ export default function GameMenu (props) {
             // disabled={!props.resetEnabled || props.playerOne.playerType === -1 || props.playerTwo.playerType === -1}
             onClick={() => props.startGame()}
             variant="contained"
-            color="success"
+            color="primary"
           >
             START
           </Button>
@@ -40,7 +40,7 @@ export default function GameMenu (props) {
             disabled={props.resetEnabled}
             onClick={() => props.resetGame()}
             variant="contained"
-            color="warning"
+            color="secondary"
           >
             RESET
           </Button>

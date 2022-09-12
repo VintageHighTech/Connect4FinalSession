@@ -25,7 +25,7 @@ public class PlayerHard implements Player {
         }
 
         // *** Check board for potential win or potential block move:
-        int[] checkWinOrBlock = Board.potentialWin(board, playerNumber);
+        int[] checkWinOrBlock = Board.potentialWinOrBlock(board, playerNumber);
         if (checkWinOrBlock[0] != -1) {
             board[checkWinOrBlock[0]][checkWinOrBlock[1]] = playerNumber;
             System.out.println("----------------"); // *** TEMP ***
@@ -102,7 +102,7 @@ public class PlayerHard implements Player {
         if (depth <= 0) {
             return score;
         }
-        if (Board.boardFull(board)) {
+        if (Board.boardIsFull(board)) {
             return 0;
         }
         if (score == depth + 1){
@@ -172,12 +172,12 @@ public class PlayerHard implements Player {
         int player = isMax ? oppositionPlayer : currentPlayer;
 
         if (player == currentPlayer) {
-            if (Board.winningMove(board, col, row, player)) {
+            if (Board.isWinningMove(board, col, row, player, false)) {
                 return depth + 1;
             }
         }
         if (player == oppositionPlayer) {
-            if (Board.winningMove(board, col, row, player)) {
+            if (Board.isWinningMove(board, col, row, player, false)) {
                 return - (depth + 1);
             }
         }

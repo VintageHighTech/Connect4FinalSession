@@ -48,11 +48,11 @@ public class GameActions {
                 game.board[columnIndex][i] = game.currentPlayer;
 
                 game.error = null; // why set to null??
-                if (Board.winningMove(game.board, columnIndex, i, game.currentPlayer)) {
+                if (Board.isWinningMove(game.board, columnIndex, i, game.currentPlayer, true)) {
                     game.gameOver = true;
                     game.inProgress = false;
-                    game.error = String.format("Game Over. The winner is %s!", game.currentPlayer == 1 ? "Yellow" : "Red");
-                } else if (Board.boardFull(game.board)) {
+                    game.error = String.format("Game Over. %s Won!", game.currentPlayer == 1 ? "Orange" : "Blue");
+                } else if (Board.boardIsFull(game.board)) {
                     game.gameOver = true;
                     game.inProgress = false;
                     game.error = "Game Over. It's a draw!";
@@ -75,14 +75,14 @@ public class GameActions {
         }
         int[] index = playerNumber == 1 ? game.one.makeMove(game.board, game.latestMove, playerNumber) : game.two.makeMove(game.board, game.latestMove, playerNumber);
 
-        if (Board.winningMove(game.board, index[0], index[1], playerNumber)) {
+        if (Board.isWinningMove(game.board, index[0], index[1], playerNumber, true)) {
             game.gameOver = true;
             game.inProgress = false;
             game.setLatestMove(index);
-            game.error = String.format("Game Over. The winner is %s!", game.currentPlayer == 1 ? "Yellow" : "Red");
+            game.error = String.format("Game Over. %s Won!", game.currentPlayer == 1 ? "Orange" : "Blue");
             return game;
         }
-        if (Board.boardFull(game.board)) {
+        if (Board.boardIsFull(game.board)) {
             game.gameOver = true;
             game.inProgress = false;
             game.setLatestMove(index);
@@ -98,7 +98,7 @@ public class GameActions {
         Connect4Game game = new Connect4Game();
         game.playerOneType = -1;
         game.playerTwoType = -1;
-        game.error = "Select Players to start game. Yellow goes first.";
+        game.error = "Select Players to start. Orange goes first.";
         game.setBoard(new int[7][6]);
         game.setLatestMove(new int[] {-1, -1});
         game.currentPlayer = 1;
@@ -118,10 +118,10 @@ public class GameActions {
          */
 
 //        TestBoards testBoardInstance = new TestBoards();
-//        int[][] test = testBoardInstance.testH9;
+//        int[][] test = testBoardInstance.ui1;
 //        game.setBoard(test);
 
-        game.error = "Select Players to start game. Yellow goes first."; // this hasn't worked!!
+        game.error = "Select Players to start. Orange goes first."; // this hasn't worked!!
         game.currentPlayer = 1;
         game.gameOver = false;
         game.inProgress = false;

@@ -10,6 +10,13 @@ export const buttonSize = {
 
 export const startButtonTheme = createTheme({
   palette: {
+    
+    secondary: {
+      main: '#cc2d2d',
+    },
+    primary: {
+      main: '#b8a437',
+    },
     action: {
       disabledBackground: '#838584',
       disabled: 'black'
@@ -20,6 +27,38 @@ export const startButtonTheme = createTheme({
       styleOverrides: {
         root: buttonSize
       }
+    }
+  }
+});
+
+// NOTE: Colours changed to new UI theme
+/*
+blue: #00a4c1
+blue win: #1dcfc9
+orange: #ff652f
+orange win: #ffb32f
+board: #026670
+background: #1f2833
+*/
+
+// 60fafc
+
+export const discTheme = createTheme({
+  palette: {
+    info: {
+      main: '#282c34'
+    },
+    player1: {
+      main: '#ff652f',
+    },
+    player2:{
+      main: '#00a4c1'
+    },
+    player1Win: {
+      main: '#ffb82f',
+    },
+    player2Win:{
+      main: '#60fafc',
     }
   }
 });

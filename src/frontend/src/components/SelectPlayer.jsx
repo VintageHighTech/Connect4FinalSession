@@ -18,7 +18,7 @@ export default function SelectPlayer(props) {
       <ThemeProvider theme={selectButtonTheme}>
         <Select
             sx={{
-              backgroundColor: props.player.playerNumber === 1 ? '#ffdf33' : '#ff3333',
+              backgroundColor: props.player.playerNumber === 1 ? '#ff652f' : '#00a4c1',
               fontWeight: 600,
               fontSize: 17,
             }}

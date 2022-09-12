@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+// NOTE: Colours changed to new UI theme
 const discTheme = createTheme({
   palette: {
     info: {

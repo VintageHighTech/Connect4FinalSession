@@ -20,7 +20,7 @@ public class PlayerEasy implements Player {
         int columnIndex = -1;
 
         if (blockOrWinCount < 1) {
-            int[] strategicMove = Board.potentialWin(board, playerNumber);
+            int[] strategicMove = Board.potentialWinOrBlock(board, playerNumber);
             if (strategicMove[0] != -1) {
                 board[strategicMove[0]][strategicMove[1]] = playerNumber;
                 blockOrWinCount++;

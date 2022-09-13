@@ -77,7 +77,7 @@ public class SimpleMoves {
                     return new int[] {column, row};
                 }
 
-                tempScore = Board.mostNeighbours(board, column, row, player == 1 ? 2 : 1);
+                tempScore = Board.hasMostNeighbours(board, column, row, player == 1 ? 2 : 1);
                 System.out.printf("score: %d, move: %d,%d%n", tempScore, column, row); // *** TEMP ***
 
                 if (tempScore > bestScore) {

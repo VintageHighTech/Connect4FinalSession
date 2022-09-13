@@ -19,7 +19,7 @@ function App() {
   }
 
   const [boardStatus, setBoardStatus] = useState(RetrieveBlankBoard());
-  const [displayStatus, setDisplayStatus] = useState("Select Players to start game. Yellow goes first.");
+  const [displayStatus, setDisplayStatus] = useState("Select Players to start. Orange goes first.");
   const [playerOne, setPlayerOne] = useState(defaultPlayerOne);
   const [playerTwo, setPlayerTwo] = useState(defaultPlayerTwo);
   const [resetEnabled, setResetEnabled] = useState(true);
@@ -103,6 +103,13 @@ function App() {
   };
 
   function MakeMove(columnIndex){
+    if (boardStatus.currentPlayer === 1 && boardStatus.playerOneType !== 0) {
+      return;
+    }
+    if (boardStatus.currentPlayer === 2 && boardStatus.playerTwoType !== 0) {
+      return;
+    }
+    
     Connect4Service.makeMove(columnIndex)
     .then(
       response => {
@@ -114,7 +121,7 @@ function App() {
         if (response.data.error != null) {
           setDisplayStatus(response.data.error)
         } else if (boardStatus.inProgress) {
-          setDisplayStatus(response.data.currentPlayer === 1 ? "Yellow's move." : "Red's move.");
+          setDisplayStatus(response.data.currentPlayer === 1 ? "Orange's move." : "Blues's move.");
         }
       }
     )
@@ -128,13 +135,13 @@ function App() {
         updateFrontEnd(response.data)
         if (inProgress) {
           backEndMakeMove();
-          showLocalStatus(); // *** TEMP ***
+          // showLocalStatus(); // *** TEMP ***
         };
         if (response.data.error != null) {
           setDisplayStatus(response.data.error)
         } else if (boardStatus.inProgress) {
           // console.log(response.data.latestMove); // *** TEMP ***
-          setDisplayStatus(response.data.currentPlayer === 1 ? "Yellow's move." : "Red's move.");
+          setDisplayStatus(response.data.currentPlayer === 1 ? "Orange's move." : "Blues's move.");
         }
       }
     )
@@ -147,7 +154,7 @@ function App() {
         setBoardStatus(response.data)
         setPlayerOne(defaultPlayerOne);
         setPlayerTwo(defaultPlayerTwo);
-        setDisplayStatus("Select Players to start game. Yellow goes first.");
+        setDisplayStatus("Select Players to start. Orange goes first.");
         setResetEnabled(true);
       }
     )

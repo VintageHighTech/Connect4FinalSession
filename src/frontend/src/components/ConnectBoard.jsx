@@ -37,7 +37,7 @@ export default function ConnectBoard(props) {
         }}
       >
         <Grid container direction="row" justifyContent="center" style={{ gap: 5 }}>
-          {props.boardStatus.board.map((column, index) => { // was just 'board.map'
+          {props.boardStatus.board.map((column, index) => {
             return (
               <Grid key={index}>
                 {boardColumn(column, index)}

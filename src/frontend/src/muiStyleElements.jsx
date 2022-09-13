@@ -34,14 +34,12 @@ export const startButtonTheme = createTheme({
 // NOTE: Colours changed to new UI theme
 /*
 blue: #00a4c1
-blue win: #1dcfc9
+blue win: #60fafc
 orange: #ff652f
-orange win: #ffb32f
-board: #026670
+orange win: #ffb82f
+board: #425859
 background: #1f2833
 */
-
-// 60fafc
 
 export const discTheme = createTheme({
   palette: {

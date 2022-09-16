@@ -87,6 +87,11 @@ public class Connect4Controller {
     @GetMapping(path = "/requestmove/{playerNumber}")
     public Connect4Game requestMove(@PathVariable int playerNumber, HttpServletRequest request) {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Connect4Game returnTemp = newGameService.requestMove(temp, playerNumber);
         request.getSession().setAttribute("game", returnTemp);
 //        System.out.println(request.getSession().getId()); // ** TEMP **

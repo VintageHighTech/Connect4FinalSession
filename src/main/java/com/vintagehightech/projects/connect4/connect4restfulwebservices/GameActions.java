@@ -112,7 +112,7 @@ public class GameActions {
         game.setBoard(new int[7][6]);
 
         /*
-        The following lines are used to initialise the board using one of the test boards
+        The following lines initialise the board using one of the test boards
         in the TestBoards class. For a normal game to function, these lines are
         commented out.
          */

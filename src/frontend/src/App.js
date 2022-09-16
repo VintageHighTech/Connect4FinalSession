@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import RetrieveBlankBoard from './components/retrieveBlankBoard';
 import Connect4Service from './api/connect4Service';
 import TimeoutDialog from './components/timeoutDialog'
+import LoadingBox from "./components/loadingBox";
 import Box from '@mui/material/Box'
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
   const [playerOne, setPlayerOne] = useState(defaultPlayerOne);
   const [playerTwo, setPlayerTwo] = useState(defaultPlayerTwo);
   const [resetEnabled, setResetEnabled] = useState(true);
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [displayLoading, setDisplayLoading] = useState(false);
 
   // *** NEW variables to be used in place of boardStatus variables
   let playerOneType = -1;
@@ -54,7 +56,6 @@ function App() {
         Connect4Service.endSession();
         console.log("Session terminated");
       }, expirationDelay);
-      console.log('gameExpire', gameExpire);
       return () => {clearTimeout(gameExpire)};
     } 
   });
@@ -129,10 +130,11 @@ function App() {
 
   function requestMove(playerNumber) {
     // console.log('Request Move, player : ', playerNumber);
-    Connect4Service.requestMove(playerNumber)
+    Connect4Service.requestMove(playerNumber, setDisplayLoading)
     .then(
       response => {
         updateFrontEnd(response.data)
+          setDisplayLoading(false);
         if (inProgress) {
           backEndMakeMove();
           // showLocalStatus(); // *** TEMP ***
@@ -144,8 +146,11 @@ function App() {
           setDisplayStatus(response.data.currentPlayer === 1 ? "Orange's move." : "Blues's move.");
         }
       }
-    )
-  };
+    ).catch(function (error) {
+        // setDisplayLoading(true);
+        console.log(error);
+    })
+  }
 
   function ResetGame() {
     Connect4Service.resetGame()
@@ -203,8 +208,11 @@ function App() {
         open={openDialog}
         handleDialog={() => HandleDialog()}
       />
+    <LoadingBox
+        open={displayLoading}
+    />
     </Box>
   );
-};
+}
 
 export default App;

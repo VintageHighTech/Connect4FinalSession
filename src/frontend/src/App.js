@@ -209,7 +209,7 @@ function App() {
                     console.log('From useEffect(): ' + response.data)
                 }
             )
-    };
+    }
 
     return (
         <Box margin={1}>

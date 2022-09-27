@@ -8,7 +8,7 @@ export default function ConnectBoard(props) {
 
   function boardColumn(column, cIndex) {
     return (
-      <Grid container direction="column-reverse" style={{ gap: 5}}>
+      <Grid container direction="column-reverse" style={{ gap: 5 }}>
         {column.map((piece, index) => {
           return (
             <Grid key={index}>

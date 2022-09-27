@@ -23,15 +23,7 @@ axios.interceptors.response.use(undefined, (err) => {
 
 class Connect4Service {
 
-setLoadingDelay(setter) {
-  let loadingDelay = setTimeout(() => {
-    setter(true);
-  }, 750);
-  return () => {clearTimeout(loadingDelay)};
-}
-
 initialiseGame() {
-    // this.setLoadingDelay(); // Have to add the setter argument to the function call
     console.log('game initialised by frontend');
     return axios.get('initial', {retry: 5, retryDelay: 3000});
   };
@@ -41,16 +33,14 @@ initialiseGame() {
   };
 
   startGame(playerOne, playerTwo) {
-    // this.setLoadingDelay(); // Have to add the setter argument to the function call
-    return axios.put(`start/${playerOne}/${playerTwo}`);
+    return axios.get(`start/${playerOne}/${playerTwo}`, {retry: 5, retryDelay: 3000});
   };
 
   makeMove(columnIndex) {
-    return axios.put(`move/${columnIndex}`);
+    return axios.get(`move/${columnIndex}`, {retry: 5, retryDelay: 3000});
   };
 
-  requestMove = (playerNumber, setter) => {
-    this.setLoadingDelay(setter);
+  requestMove = (playerNumber) => {
     return axios.get(`requestmove/${playerNumber}`, {retry: 5, retryDelay: 3000});
   };
 
@@ -65,3 +55,4 @@ initialiseGame() {
 }
 
 export default new Connect4Service();
+

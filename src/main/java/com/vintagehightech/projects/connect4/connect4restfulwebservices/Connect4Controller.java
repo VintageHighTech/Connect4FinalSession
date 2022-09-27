@@ -49,11 +49,11 @@ public class Connect4Controller {
     // THIS WORKS!! but do i need to parse the integers???
 
     /*-
-        startGame has been revised so it checks if the value of the stored attribute 'game' is null,
+        startGame has been revised to check if the value of the stored attribute 'game' is null,
         i.e. if a session does not exist. If it does not, a fresh object of the Connect4Game is instantiated
         and the user (frontend) can start a new game without having to 'reset'.
      */
-    @PutMapping(path = "/start/{playerOne}/{playerTwo}")
+    @GetMapping(path = "/start/{playerOne}/{playerTwo}")
     public Connect4Game startGame(@PathVariable String playerOne,
                                   @PathVariable String playerTwo,
                                   HttpServletRequest request) {
@@ -71,11 +71,15 @@ public class Connect4Controller {
                 Integer.parseInt(playerOne),
                 Integer.parseInt(playerTwo));
         request.getSession().setAttribute("game", returnTemp);
-//        System.out.println(request.getSession().getId()); // ** TEMP **
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
-    @PutMapping(path = "/move/{columnIndex}")
+    @GetMapping(path = "/move/{columnIndex}")
     public Connect4Game makeMove(@PathVariable int columnIndex, HttpServletRequest request) {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
         Connect4Game returnTemp = newGameService.makeMove(temp, columnIndex);
@@ -87,11 +91,11 @@ public class Connect4Controller {
     @GetMapping(path = "/requestmove/{playerNumber}")
     public Connect4Game requestMove(@PathVariable int playerNumber, HttpServletRequest request) {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         Connect4Game returnTemp = newGameService.requestMove(temp, playerNumber);
         request.getSession().setAttribute("game", returnTemp);
 //        System.out.println(request.getSession().getId()); // ** TEMP **

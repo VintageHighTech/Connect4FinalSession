@@ -36,10 +36,12 @@ export const startButtonTheme = createTheme({
 blue: #00a4c1
 blue win: #60fafc
 orange: #ff652f
-orange win: #ffb82f
+orange win: #ffa92f
 board: #425859
 background: #1f2833
 */
+
+// ff962f
 
 export const discTheme = createTheme({
   palette: {
@@ -47,16 +49,16 @@ export const discTheme = createTheme({
       main: '#282c34'
     },
     player1: {
-      main: '#ff652f',
+      main: '#ff652f'
     },
     player2:{
       main: '#00a4c1'
     },
     player1Win: {
-      main: '#ffb82f',
+      main: '#ffa92f'
     },
     player2Win:{
-      main: '#60fafc',
+      main: '#60fafc'
     }
   }
 });

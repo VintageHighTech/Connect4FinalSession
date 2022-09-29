@@ -28,9 +28,9 @@ public class PlayerHard implements Player {
         int[] checkWinOrBlock = Board.potentialWinOrBlock(board, playerNumber);
         if (checkWinOrBlock[0] != -1) {
             board[checkWinOrBlock[0]][checkWinOrBlock[1]] = playerNumber;
-            System.out.println("----------------"); // *** TEMP ***
-            System.out.println("Blocked by Hard!"); // *** TEMP ***
-            System.out.println("----------------"); // *** TEMP ***
+//            System.out.println("----------------"); // *** TEMP ***
+//            System.out.println("Blocked by Hard!"); // *** TEMP ***
+//            System.out.println("----------------"); // *** TEMP ***
             return checkWinOrBlock;
         }
 
@@ -50,9 +50,9 @@ public class PlayerHard implements Player {
         int[] bestMove = {-1, -1};
         int[] allScores = new int[7];
 
-        System.out.println("--------------------------"); // *** TEMP ***
-        System.out.println("Scores from HARD top level"); // *** TEMP ***
-        System.out.println("--------------------------"); // *** TEMP ***
+//        System.out.println("--------------------------"); // *** TEMP ***
+//        System.out.println("Scores from HARD top level"); // *** TEMP ***
+//        System.out.println("--------------------------"); // *** TEMP ***
 
         for (int i = 0; i <= 6; i++) {
             for (int j = 0; j <= 5; j++) {
@@ -65,7 +65,7 @@ public class PlayerHard implements Player {
                             Integer.MAX_VALUE,
                             new int[] {i, j},
                             false);
-                    System.out.println("Column " + i + ": score = " + score); // *** TEMP ***
+//                    System.out.println("Column " + i + ": score = " + score); // *** TEMP ***
                     tempBoard[i][j] = 0;
                     allScores[i] = score; // *** TO DELETE ***
                     List<Integer> temp = new ArrayList<>(2);
@@ -81,7 +81,7 @@ public class PlayerHard implements Player {
             }
         }
 
-        System.out.println("--------------------------"); // *** TEMP ***
+//        System.out.println("--------------------------"); // *** TEMP ***
 
         bestMove = SimpleMoves.nextBestMove(board, positions, bestScore, playerNumber);
 

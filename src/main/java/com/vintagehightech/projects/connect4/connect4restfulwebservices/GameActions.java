@@ -47,23 +47,23 @@ public class GameActions {
             if(game.board[columnIndex][i] == 0) {
                 game.board[columnIndex][i] = game.currentPlayer;
 
-                game.error = null; // why set to null??
                 if (Board.isWinningMove(game.board, columnIndex, i, game.currentPlayer, true)) {
                     game.gameOver = true;
                     game.inProgress = false;
-                    game.error = String.format("Game Over. %s Won!", game.currentPlayer == 1 ? "Orange" : "Blue");
+                    game.message = String.format("Game Over. %s Wins!", game.currentPlayer == 1 ? "Orange" : "Blue");
                 } else if (Board.boardIsFull(game.board)) {
                     game.gameOver = true;
                     game.inProgress = false;
-                    game.error = "Game Over. It's a draw!";
+                    game.message = "Game Over. It's a draw!";
                 } else {
                     game.currentPlayer = game.currentPlayer == 1 ? 2 : 1;
+                    game.message = game.currentPlayer == 1 ? "Orange's move" : "Blue's move";
                 }
                 game.latestMove = new int[] {columnIndex, i};
                 return game; /// Something wrong with this if statement - look at first if!!
             }
         }
-        game.error = "Can't move here!";
+        game.message = "Can't move here!";
         game.latestMove = new int[] {-1, -1};
         return game;
     }
@@ -73,24 +73,26 @@ public class GameActions {
         if (!game.inProgress) {
             return game;
         }
-        int[] index = playerNumber == 1 ? game.one.makeMove(game.board, game.latestMove, playerNumber) : game.two.makeMove(game.board, game.latestMove, playerNumber);
+        int[] index = playerNumber == 1 ? game.one.makeMove(game.board, game.latestMove, playerNumber)
+                : game.two.makeMove(game.board, game.latestMove, playerNumber);
 
         if (Board.isWinningMove(game.board, index[0], index[1], playerNumber, true)) {
             game.gameOver = true;
             game.inProgress = false;
             game.setLatestMove(index);
-            game.error = String.format("Game Over. %s Won!", game.currentPlayer == 1 ? "Orange" : "Blue");
+            game.message = String.format("Game Over. %s Wins!", game.currentPlayer == 1 ? "Orange" : "Blue");
             return game;
         }
         if (Board.boardIsFull(game.board)) {
             game.gameOver = true;
             game.inProgress = false;
             game.setLatestMove(index);
-            game.error = "Game Over. It's a draw!";
+            game.message = "Game Over. It's a draw!";
             return game;
         }
         game.setLatestMove(index);
         game.currentPlayer = game.currentPlayer == 1 ? 2 : 1;
+        game.message = game.currentPlayer == 1 ? "Orange's move" : "Blue's move";
         return game;
     }
 
@@ -98,7 +100,7 @@ public class GameActions {
         Connect4Game game = new Connect4Game();
         game.playerOneType = -1;
         game.playerTwoType = -1;
-        game.error = "Select Players to start. Orange goes first.";
+        game.message = "Select players to start. Orange goes first.";
         game.setBoard(new int[7][6]);
         game.setLatestMove(new int[] {-1, -1});
         game.currentPlayer = 1;
@@ -121,7 +123,7 @@ public class GameActions {
 //        int[][] test = testBoardInstance.ui1;
 //        game.setBoard(test);
 
-        game.error = "Select Players to start. Orange goes first."; // this hasn't worked!!
+        game.message = "Select players to start. Orange goes first."; // this hasn't worked!!
         game.currentPlayer = 1;
         game.gameOver = false;
         game.inProgress = false;

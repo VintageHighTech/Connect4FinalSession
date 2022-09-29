@@ -12,12 +12,12 @@ public class Connect4Game {
     int currentPlayer;
     boolean gameOver;
     boolean inProgress;
-    String error;
+    String message;
     Player one;
     Player two;
 
     public Connect4Game() {
-        currentPlayer = 1; // add this to whichever 'startGame' constructor you end up using
+        currentPlayer = 1;
     }
 
     public int[][] getBoard() { // *** NOTE *** getBoard returns the int[][] board from class 'Board'
@@ -60,12 +60,12 @@ public class Connect4Game {
         this.playerTwoType = playerTwoType;
     }
 
-    public String getError() {
-        return error;
+    public String getMessage() {
+        return message;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public boolean isInProgress() {

@@ -2,7 +2,6 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Disc from './disc';
-import '../App.css';
 
 export default function ConnectBoard(props) {
 
@@ -18,13 +17,12 @@ export default function ConnectBoard(props) {
         })}
       </Grid>
     )
-  };
+  }
 
   return (
     <>
-      <h1>Connect 4</h1>
-      <Box 
-        className="App"
+        <h1>Connect 4</h1>
+        <Box
         display="flex"
         alignItems="center"
         alignContent="center"

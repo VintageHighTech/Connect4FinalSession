@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-export const buttonSize = {
+const buttonSize = {
   minWidth: "145px",
   maxWidth: "145px",
   maxHeight: "40px",
@@ -40,8 +40,6 @@ orange win: #ffa92f
 board: #425859
 background: #1f2833
 */
-
-// ff962f
 
 export const discTheme = createTheme({
   palette: {

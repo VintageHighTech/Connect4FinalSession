@@ -24,7 +24,7 @@ public class PlayerEasy implements Player {
             if (strategicMove[0] != -1) {
                 board[strategicMove[0]][strategicMove[1]] = playerNumber;
                 blockOrWinCount++;
-                System.out.println("Block or win from EASY");
+//                System.out.println("Block or win from EASY");
                 return strategicMove;
             }
         }

@@ -1,45 +1,22 @@
+@font-face {
+  font-family: Centra;
+  src: url('./assets/CentraNo2-Medium.ttf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: Centra;
+  src: url('./assets/CentraNo2-Book.ttf');
+  font-weight: 400;
+}
+
 html body {
-  background-color: #1f2833;
-  color: rgb(206, 206, 206);
-  align-items: center;
-}
-
-.App {
-  /* display: block; */
-  text-align: center;
-  align-items: center;
-  justify-items: center;
-  justify-content: center;
-}
-
-.Menu {
-  color:rgb(206, 206, 206);
-  align-items: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-weight: 400;
+  position: relative;
+  background-color: #1f2833 !important;
+  color: #B8B8B8 !important;
+  font-family: 'Centra', sans-serif !important;
 }
 
-.App-link {
-  color: #61dafb;
-}
 

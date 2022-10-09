@@ -1,8 +1,6 @@
 package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +29,6 @@ public class Connect4Controller {
     public Connect4Game initialiseGame(HttpSession session) {
         Connect4Game game = GameActions.resetGame();
         session.setAttribute("game", game);
-//        System.out.println(session.getId()); // ** TEMP **
-//        System.out.println("From initialiseGame: game = " + (Connect4Game) session.getAttribute("game")); // *** TEMP ***
         return (Connect4Game) session.getAttribute("game");
     }
 
@@ -46,9 +42,7 @@ public class Connect4Controller {
         session.invalidate();
     }
 
-    // THIS WORKS!! but do i need to parse the integers???
-
-    /*-
+    /*
         startGame has been revised to check if the value of the stored attribute 'game' is null,
         i.e. if a session does not exist. If it does not, a fresh object of the Connect4Game is instantiated
         and the user (frontend) can start a new game without having to 'reset'.
@@ -57,25 +51,15 @@ public class Connect4Controller {
     public Connect4Game startGame(@PathVariable String playerOne,
                                   @PathVariable String playerTwo,
                                   HttpServletRequest request) {
-//        System.out.println((Connect4Game) request.getSession().getAttribute("game")); // *** TEMP ***
         Connect4Game temp = new Connect4Game();
         if (request.getSession().getAttribute("game") != null) {
-//            System.out.println("stored game is not null"); // *** TEMP ***
             temp = (Connect4Game) request.getSession().getAttribute("game");
         }
-//
         Connect4Game resetTempBoard = newGameService.resetBoard(temp);
-//        System.out.println("temp = " + temp); // *** TEMP ***
-        // add returnTemp to reset board ONLY, not game.
         Connect4Game returnTemp = newGameService.startNewGame(resetTempBoard,
                 Integer.parseInt(playerOne),
                 Integer.parseInt(playerTwo));
         request.getSession().setAttribute("game", returnTemp);
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
@@ -84,21 +68,14 @@ public class Connect4Controller {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
         Connect4Game returnTemp = newGameService.makeMove(temp, columnIndex);
         request.getSession().setAttribute("game", returnTemp);
-//        System.out.println(request.getSession().getId()); // ** TEMP **
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
     @GetMapping(path = "/requestmove/{playerNumber}")
     public Connect4Game requestMove(@PathVariable int playerNumber, HttpServletRequest request) {
         Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         Connect4Game returnTemp = newGameService.requestMove(temp, playerNumber);
         request.getSession().setAttribute("game", returnTemp);
-//        System.out.println(request.getSession().getId()); // ** TEMP **
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 

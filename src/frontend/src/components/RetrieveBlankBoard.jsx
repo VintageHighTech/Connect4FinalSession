@@ -15,7 +15,7 @@ export default function RetrieveBlankBoard () {
       currentPlayer: 0,
       gameOver: false,
       inProgress: true,
-      error: null
+      message: null
     }
   )
 } 

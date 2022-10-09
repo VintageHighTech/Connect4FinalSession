@@ -45,8 +45,8 @@ public class SimpleMoves {
             bottomRow[i] = board[i][0];
         }
 
-        System.out.println(Arrays.toString(bottomRow));
-        System.out.println(Arrays.toString(initialBoard[4]));
+//        System.out.println(Arrays.toString(bottomRow));
+//        System.out.println(Arrays.toString(initialBoard[4]));
 
         int bestMove = -1;
         for (int i = 0; i < initialBoard.length ; i++) {
@@ -64,8 +64,8 @@ public class SimpleMoves {
         int tempScore;
         int bestScore = Integer.MIN_VALUE;
 
-        System.out.println("Scores from nextBestMove"); // *** TEMP ***
-        System.out.println("------------------------"); // *** TEMP ***
+//        System.out.println("Scores from nextBestMove"); // *** TEMP ***
+//        System.out.println("------------------------"); // *** TEMP ***
 
         for (var score : positions.entrySet()) {
             if (score.getValue() == targetScore) {
@@ -73,12 +73,12 @@ public class SimpleMoves {
                 row = score.getKey().get(1);
 
                 if (Board.checkNeighbours(board, column, row, player == 1 ? 2 : 1))  {
-                    System.out.println("Returned best move = [" + column + ", " + row + "]"); // *** TEMP ***
+//                    System.out.println("Returned best move = [" + column + ", " + row + "]"); // *** TEMP ***
                     return new int[] {column, row};
                 }
 
                 tempScore = Board.hasMostNeighbours(board, column, row, player == 1 ? 2 : 1);
-                System.out.printf("score: %d, move: %d,%d%n", tempScore, column, row); // *** TEMP ***
+//                System.out.printf("score: %d, move: %d,%d%n", tempScore, column, row); // *** TEMP ***
 
                 if (tempScore > bestScore) {
                     bestMove = new int[] {column, row};
@@ -86,8 +86,8 @@ public class SimpleMoves {
                 }
             }
         }
-        System.out.println("Returned best move = " + Arrays.toString(bestMove)); // *** TEMP ***
-        System.out.println("--------------------------"); // *** TEMP ***
+//        System.out.println("Returned best move = " + Arrays.toString(bestMove)); // *** TEMP ***
+//        System.out.println("--------------------------"); // *** TEMP ***
 
         return bestMove;
     }

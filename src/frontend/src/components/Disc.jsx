@@ -32,10 +32,11 @@ function Disc(props) {
                 variant="contained"
                 color={discColor}
                 style={{
+                    margin: "3px",
                     maxWidth: "45px",
                     maxHeight: "45px",
-                    minWidth: "45px",
-                    minHeight: "45px",
+                    minWidth: "39px",
+                    minHeight: "39px",
                     transition: 'none'
                 }}
                 sx={{

@@ -15,6 +15,15 @@ export default function GameMenu (props) {
         alignItems='center'
         justifyContent='center'
       >
+        <ThemeProvider theme={startButtonTheme}>
+          <Button
+              disabled={props.inProgress || props.playerOne.playerType === -1 || props.playerTwo.playerType === -1}
+              onClick={() => props.startGame()}
+              variant="contained"
+              color="primary"
+          >
+            START
+          </Button>
         <SelectPlayer
           player={props.playerOne}
           handleChoice={props.setPlayerOne}
@@ -25,15 +34,7 @@ export default function GameMenu (props) {
           handleChoice={props.setPlayerTwo}
           disabled={props.inProgress}
         />
-        <ThemeProvider theme={startButtonTheme}>
-          <Button
-            disabled={props.inProgress || props.playerOne.playerType === -1 || props.playerTwo.playerType === -1}
-            onClick={() => props.startGame()}
-            variant="contained"
-            color="primary"
-          >
-            START
-          </Button>
+
           <Button
             disabled={props.resetEnabled}
             onClick={() => props.resetGame()}

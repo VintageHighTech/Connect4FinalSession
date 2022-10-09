@@ -1,15 +1,17 @@
 import React from 'react';
-import {Box, Grid, Typography} from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Disc from './disc';
 
 export default function ConnectBoard(props) {
 
     function boardColumn(column, cIndex) {
         return (
-            <Grid container direction="column-reverse">
+            <Grid container direction="column-reverse" style={{gap: 5}}>
+
                 {column.map((piece, index) => {
                     return (
-                        <Grid item key={index}>
+                        <Grid key={index}>
                             <Disc color={piece} select={() => props.MakeMove(cIndex)}/>
                         </Grid>
                     )
@@ -20,28 +22,30 @@ export default function ConnectBoard(props) {
 
     return (
         <>
-            <Typography fontFamily="Ubuntu"
-                        fontSize={38} fontWeight="700"
-                        color="#00a4c1"
-                        marginBottom="10px"
-            >
-                Connect 4
-            </Typography>
+            <h1>Connect 4</h1>
             <Box
+                // width="95%"
+                // height="95%"
+                // minWidth="400px"
+                // minHeight="400px"
+                // maxWidth="500px"
+                // maxHeight="500px"
+                display="flex"
                 justifyContent="center"
                 alignItems="center"
                 alignContent="center"
-                borderRadius={6}
-                padding="2px"
+                borderRadius={7}
                 sx={{
                     align: 'center',
+                    width: 378,
+                    height: 325,
                     backgroundColor: '#425859'
                 }}
             >
-                <Grid container direction="row" justifyContent="center" rowSpacing={3}>
+                <Grid container direction="row" justifyContent="center" style={{gap: 5}}>
                     {props.boardStatus.board.map((column, index) => {
                         return (
-                            <Grid item xs={1.7} key={index}>
+                            <Grid key={index}>
                                 {boardColumn(column, index)}
                             </Grid>
                         )
@@ -49,5 +53,5 @@ export default function ConnectBoard(props) {
                 </Grid>
             </Box>
         </>
-    );
-}
+    )
+};

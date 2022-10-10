@@ -1,10 +1,13 @@
 import React from 'react';
 import {Box, Grid, Typography} from '@mui/material';
-import Disc from './disc';
+import Disc from './Disc';
 
 export default function ConnectBoard(props) {
-
-    function boardColumn(column, cIndex) {
+    /*
+     The board is displayed as a grid (row) of seven BoardColumns; each column comprising a grid (column)
+     of six Discs.
+     */
+    function BoardColumn(column, cIndex) {
         return (
             <Grid container direction="column-reverse">
                 {column.map((piece, index) => {
@@ -15,7 +18,7 @@ export default function ConnectBoard(props) {
                     )
                 })}
             </Grid>
-        )
+        );
     }
 
     return (
@@ -42,7 +45,7 @@ export default function ConnectBoard(props) {
                     {props.boardStatus.board.map((column, index) => {
                         return (
                             <Grid item xs={1.7} key={index}>
-                                {boardColumn(column, index)}
+                                {BoardColumn(column, index)}
                             </Grid>
                         )
                     })}

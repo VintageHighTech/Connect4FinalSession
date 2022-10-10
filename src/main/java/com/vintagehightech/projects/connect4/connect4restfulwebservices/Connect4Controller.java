@@ -7,15 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 
+/*
+    The game controller uses HttpSessions to manage games. Each game session is assigned
+    an ID. The frontend stores the session id as a cookie.
+ */
+
 @RestController
-@CrossOrigin(origins= {"http://localhost:3000"}) // For the purposes of development on local machine
+@CrossOrigin(origins = {"http://localhost:3000"}) // For the purposes of development on local machine
 public class Connect4Controller {
-//    @ExceptionHandler(NullPointerException.class)
-//    public Connect4Game handleNullPointerException(NullPointerException exception) {
-//        Connect4Game temp = new Connect4Game();
-//        temp.setError("Ain't working!");
-//        return temp;
-//    }
 
     @Autowired
     private GameService newGameService;
@@ -27,8 +26,7 @@ public class Connect4Controller {
 
     @GetMapping(path = "/initial")
     public Connect4Game initialiseGame(HttpSession session) {
-        Connect4Game game = GameActions.resetGame();
-        session.setAttribute("game", game);
+        session.setAttribute("game", GameActions.resetGame());
         return (Connect4Game) session.getAttribute("game");
     }
 
@@ -56,10 +54,11 @@ public class Connect4Controller {
             temp = (Connect4Game) request.getSession().getAttribute("game");
         }
         Connect4Game resetTempBoard = newGameService.resetBoard(temp);
-        Connect4Game returnTemp = newGameService.startNewGame(resetTempBoard,
-                Integer.parseInt(playerOne),
-                Integer.parseInt(playerTwo));
-        request.getSession().setAttribute("game", returnTemp);
+        request.getSession().setAttribute("game",
+                newGameService.startNewGame(resetTempBoard,
+                        Integer.parseInt(playerOne),
+                        Integer.parseInt(playerTwo))
+        );
         return (Connect4Game) request.getSession().getAttribute("game");
     }
 
@@ -73,8 +72,9 @@ public class Connect4Controller {
 
     @GetMapping(path = "/requestmove/{playerNumber}")
     public Connect4Game requestMove(@PathVariable int playerNumber, HttpServletRequest request) {
-        Connect4Game temp = (Connect4Game) request.getSession().getAttribute("game");
-        Connect4Game returnTemp = newGameService.requestMove(temp, playerNumber);
+        Connect4Game returnTemp = newGameService.requestMove(
+                (Connect4Game) request.getSession().getAttribute("game"),
+                playerNumber);
         request.getSession().setAttribute("game", returnTemp);
         return (Connect4Game) request.getSession().getAttribute("game");
     }

@@ -13,7 +13,7 @@ public class GameService {
     }
 
     public Connect4Game makeMove(Connect4Game game, int columnIndex) {
-        return GameActions.moveMade(game, columnIndex);
+        return GameActions.makeHumanMove(game, columnIndex);
     }
 
     public Connect4Game resetGame() {

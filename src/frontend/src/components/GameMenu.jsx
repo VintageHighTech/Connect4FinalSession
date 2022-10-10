@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button'
-import SelectPlayer from './selectPlayer';
+import SelectPlayer from './SelectPlayer';
 import Stack from '@mui/material/Stack';
 import { ThemeProvider} from '@mui/material/styles';
 import { startButtonTheme} from '../muiStyleElements';
@@ -34,7 +34,6 @@ export default function GameMenu (props) {
           handleChoice={props.setPlayerTwo}
           disabled={props.inProgress}
         />
-
           <Button
             disabled={props.resetEnabled}
             onClick={() => props.resetGame()}
@@ -45,5 +44,5 @@ export default function GameMenu (props) {
           </Button>
         </ThemeProvider>
       </Stack>
-  )
-};
+  );
+}

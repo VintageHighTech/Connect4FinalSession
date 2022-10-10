@@ -2,12 +2,18 @@ package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 
 import java.util.Random;
 
+    /*
+        The Easy player will make a predetermined "bestFirstMove" for its first move.
+        For each subsequent move it will first check if there is a potential winning move.
+        If not, it will check for a potential blocking move. If neither move is applicable,
+        it will choose a column at random.
+     */
+
 public class PlayerMedium implements Player {
     Random ran = new Random();
     boolean firstMove = true;
 
     public int[] makeMove(int[][] board, int[] latestMove, int playerNumber) {
-//        System.out.println("Medium Player");
         if (firstMove) {
             int column = SimpleMoves.bestFirstMove(board, playerNumber);
             firstMove = false;
@@ -27,7 +33,6 @@ public class PlayerMedium implements Player {
             for (int i = 0; i <= 5; i++) {
                 if(board[columnIndex][i] == 0) {
                     board[columnIndex][i] = playerNumber;
-//                    System.out.println("Success: column: " + columnIndex + ", row " + i);
                     return new int[] {columnIndex, i};
                 }
             }

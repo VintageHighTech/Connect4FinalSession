@@ -3,13 +3,14 @@ import React, {useState, useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box'
 import Connect4Service from './api/connect4Service';
-import ConnectBoard from './components/connectBoard';
-import GameMenu from './components/gameMenu';
-import RetrieveBlankBoard from './components/retrieveBlankBoard';
-import LostConnectionDialog from "./components/lostConnectionDialog";
-import TimeoutDialog from './components/timeoutDialog'
-import LoadingBox from "./components/loadingBox";
-import animateDisc from "./components/animateDisc";
+import ConnectBoard from './components/ConnectBoard';
+import GameMenu from './components/GameMenu';
+import RetrieveBlankBoard from './components/RetrieveBlankBoard';
+import LostConnectionDialog from "./components/LostConnectionDialog";
+import TimeoutDialog from './components/TimeoutDialog'
+import LoadingBox from "./components/LoadingBox";
+import InstructionDialog from "./components/InstructionDialog";
+import AnimateDisc from "./components/AnimateDisc";
 
 function App() {
     const defaultPlayerOne = {
@@ -30,6 +31,8 @@ function App() {
     const [openDialog, setOpenDialog] = useState(false);
     const [openError, setOpenError] = useState(false);
     const [displayLoading, setDisplayLoading] = useState(false);
+    const [displayInstruction, setDisplayInstruction] = useState(true);
+
 
     // *** NEW variables to be used in place of boardStatus variables
     let playerOneType = -1;
@@ -73,28 +76,26 @@ function App() {
     });
 
     function StartGame() {
-        setLoadingDelay(true)
+        SetLoadingDelay(true)
         Connect4Service.startGame(playerOne.playerType, playerTwo.playerType)
             .then(
                 response => {
-                    setLoadingDelay(false);
-                    // console.log("Start Game returned data", response.data); // *** TEMP ***
+                    SetLoadingDelay(false);
                     setDisplayStatus(response.data.message);
-                    updateFrontEnd(response.data);
+                    UpdateFrontEnd(response.data);
                     setResetEnabled(false);
-                    backEndMakeMove();
-                    // showLocalStatus(); // *** TEMP ***
+                    BackEndMakeMove();
                 }
             ).catch(function (error) {
             setOpenError(true);
             console.log(error);
-        })
-    };
+        });
+    }
 
     // **** Displays loading dialogue after a predetermined delay when response from server is slow ******
-    function setLoadingDelay(state) {
+    function SetLoadingDelay(state) {
         if (state) {
-                loadingDelay = setTimeout(() => {
+            loadingDelay = setTimeout(() => {
                 setDisplayLoading(true);
             }, 1200)
             return () => {
@@ -106,16 +107,20 @@ function App() {
         }
     }
 
-    function backEndMakeMove() {
+    /*
+    If the current player is not 'Human', a call will automatically be made to the backend,
+    requesting a move from an AI player
+     */
+    function BackEndMakeMove() {
         if (currentPlayer === 1 && playerOneType !== 0) {
-            requestMove(1);
+            RequestMove(1);
         }
         if (currentPlayer === 2 && playerTwoType !== 0) {
-            requestMove(2);
+            RequestMove(2);
         }
     }
 
-    function updateFrontEnd(data) {
+    function UpdateFrontEnd(data) {
         setBoardStatus(data)
         playerOneType = data.playerOneType;
         playerTwoType = data.playerTwoType;
@@ -130,40 +135,25 @@ function App() {
         }
     }
 
+    /*
+        MakeMove function is executed when a human player selects a disc on the board.
+        The backend updates the board status and checks if the game is over before
+        returning the updated board.
+     */
     function MakeMove(columnIndex) {
         if (!enableBoard) {
             return;
         }
-        setLoadingDelay(true);
+        SetLoadingDelay(true);
         setEnableBoard(false);
         Connect4Service.makeMove(columnIndex)
             .then(
                 async response => {
-                    setLoadingDelay(false);
-                    await animateDisc(setBoardStatus, response.data)
-                    updateFrontEnd(response.data)
+                    SetLoadingDelay(false);
+                    await AnimateDisc(setBoardStatus, response.data)
+                    UpdateFrontEnd(response.data)
                     if (inProgress) {
-                        backEndMakeMove();
-                    }
-                    setDisplayStatus(response.data.message);
-                }
-            ).catch(function (error) {
-                setOpenError(true);
-                console.log(error);
-        })
-    }
-
-    function requestMove(playerNumber) {
-        setLoadingDelay(true);
-        setEnableBoard(false);
-        Connect4Service.requestMove(playerNumber, setDisplayLoading)
-            .then(
-                async response => {
-                    setLoadingDelay(false);
-                    await animateDisc(setBoardStatus, response.data);
-                    updateFrontEnd(response.data)
-                    if (inProgress) {
-                        backEndMakeMove();
+                        BackEndMakeMove();
                     }
                     setDisplayStatus(response.data.message);
                 }
@@ -173,6 +163,31 @@ function App() {
         })
     }
 
+    /*
+        RequestMove function is executed when the current player is not 'Human'. The function
+        requests a move from the backend and updates the board when a move is made.
+     */
+    function RequestMove(playerNumber) {
+        SetLoadingDelay(true);
+        setEnableBoard(false);
+        Connect4Service.requestMove(playerNumber, setDisplayLoading)
+            .then(
+                async response => {
+                    SetLoadingDelay(false);
+                    await AnimateDisc(setBoardStatus, response.data);
+                    UpdateFrontEnd(response.data)
+                    if (inProgress) {
+                        BackEndMakeMove();
+                    }
+                    setDisplayStatus(response.data.message);
+                }
+            ).catch(function (error) {
+            setOpenError(true);
+            console.log(error);
+        })
+    }
+
+    // ResetGame interrupts the game and resets all parameters to their default value.
     function ResetGame() {
         inProgress = false;
         Connect4Service.resetGame()
@@ -187,23 +202,24 @@ function App() {
             ).catch(function (error) {
             setOpenError(true);
             console.log(error);
-        })
+        });
     }
 
     function HandleDialog() {
-        setLoadingDelay(false);
+        SetLoadingDelay(false);
         setOpenDialog(false);
         setOpenError(false);
         Connect4Service.initialiseGame()
             .then(
                 response => {
-                    updateFrontEnd(response.data)
+                    UpdateFrontEnd(response.data)
                     ResetGame();
                 }
             )
     }
 
-    function showLocalStatus() { // ** TEMP to check backend successfully revised frontend local variables **
+    // Temporary function to check backend successfully revised frontend local variables.
+    function ShowLocalStatus() {
         console.log('playerOneType: ', playerOneType);
         console.log('playerTwoType: ', playerTwoType);
         console.log('inProgress: ', inProgress);
@@ -243,6 +259,10 @@ function App() {
             <LostConnectionDialog
                 open={openError}
                 handleDialog={() => HandleDialog()}
+            />
+            <InstructionDialog
+                open={displayInstruction}
+                handleDialog={() => setDisplayInstruction(false)}
             />
             <LoadingBox
                 open={displayLoading}

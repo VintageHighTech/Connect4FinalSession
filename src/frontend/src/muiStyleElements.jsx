@@ -10,7 +10,6 @@ const buttonSize = {
 
 export const startButtonTheme = createTheme({
   palette: {
-    
     secondary: {
       main: '#cc2d2d',
     },
@@ -30,16 +29,6 @@ export const startButtonTheme = createTheme({
     }
   }
 });
-
-// NOTE: Colours changed to new UI theme
-/*
-blue: #00a4c1
-blue win: #60fafc
-orange: #ff652f
-orange win: #ffa92f
-board: #425859
-background: #1f2833
-*/
 
 export const discTheme = createTheme({
   palette: {

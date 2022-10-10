@@ -47,6 +47,6 @@ export default function SelectPlayer(props) {
         </Select>
       </ThemeProvider>
     </FormControl>
-  )
-};
+  );
+}
 

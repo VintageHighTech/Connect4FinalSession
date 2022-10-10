@@ -14,7 +14,7 @@ public class TestBoards {
                     {1,2,1,0,0,0}
             };
 
-    // Yellow's next move is a win
+    // Orange's next move is a win
     int[][] test2 = new int[][]
             {
                     {1,2,1,2,0,0},
@@ -26,7 +26,7 @@ public class TestBoards {
                     {1,2,1,0,0,0}
             };
 
-    // Red's next move is a win - two winning positions!
+    // Blue's next move is a win - two winning positions!
     int[][] test3 = new int[][]
             {
                     {2,2,1,2,0,0},
@@ -38,7 +38,7 @@ public class TestBoards {
                     {1,2,1,0,0,0}
             };
 
-    // Red's next move is a win - one diagonal winning position!
+    // Blue's next move is a win - one diagonal winning position!
     int[][] test4 = new int[][]
             {
                     {1,2,1,2,0,0},
@@ -50,7 +50,7 @@ public class TestBoards {
                     {1,2,1,0,0,0}
             };
 
-    // Red's next move is a win - placed inside existing three discs.
+    // Blue's next move is a win - placed inside existing three discs.
     int[][] test5 = new int[][]
             {
                     {1,2,1,2,0,0},

@@ -38,8 +38,13 @@ public class GameActions {
         }
         return game;
     }
-
-    public static Connect4Game moveMade(Connect4Game game, int columnIndex) {
+    /*
+        makeHumanMove handles moves made by a human player. It firstly checks if there is an empty
+        position in the chosen column. It then checks if the move was a winning move. If not,
+        it checks if the board is full i.e. the game is a draw. It also sets the message
+        parameter to indicate who's move is next.
+     */
+    public static Connect4Game makeHumanMove(Connect4Game game, int columnIndex) {
         if (!game.inProgress) {
             return game;
         }
@@ -60,7 +65,7 @@ public class GameActions {
                     game.message = game.currentPlayer == 1 ? "Orange's move" : "Blue's move";
                 }
                 game.latestMove = new int[] {columnIndex, i};
-                return game; /// Something wrong with this if statement - look at first if!!
+                return game;
             }
         }
         game.message = "Can't move here!";
@@ -68,8 +73,13 @@ public class GameActions {
         return game;
     }
 
+    /*
+        requestMove calls the makeMove method from an AI Player using the Player interface.
+        It then checks if the move was a winning move. If not,
+        it checks if the board is full i.e. the game is a draw. It also sets the message
+        parameter to indicate who's move is next.
+     */
     public static Connect4Game requestMove(Connect4Game game, int playerNumber) {
-//        System.out.println("requestMove. Player: " + playerNumber); // *** TEMP ***
         if (!game.inProgress) {
             return game;
         }

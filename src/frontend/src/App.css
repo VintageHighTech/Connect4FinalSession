@@ -1,22 +1,6 @@
-@font-face {
-  font-family: Centra;
-  src: url('./assets/CentraNo2-Medium.ttf');
-  font-weight: 500;
-}
-@font-face {
-  font-family: Centra;
-  src: url('./assets/CentraNo2-Book.ttf');
-  font-weight: 400;
-}
-
-html body {
-  align-items: center;
-  justify-content: center;
-  font-weight: 400;
-  position: relative;
+body {
   background-color: #1f2833 !important;
   color: #B8B8B8 !important;
-  font-family: 'Centra', sans-serif !important;
 }
 
 

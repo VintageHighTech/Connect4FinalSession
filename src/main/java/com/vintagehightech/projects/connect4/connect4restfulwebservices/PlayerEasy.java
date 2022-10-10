@@ -3,13 +3,17 @@ import java.util.Random;
 
 public class PlayerEasy implements Player {
 
+    /*
+        The Easy player will make make a predetermined "bestFirstMove" for its first move.
+        It will then take its first opportunity to win or its first opportunity to block.
+        All other moves are chosen at random.
+     */
+
     Random ran = new Random();
     boolean firstMove = true;
     int blockOrWinCount = 0;
 
     public int[] makeMove(int[][] board, int[] latestMove, int playerNumber) {
-//        System.out.println("Easy Level");
-
         if (firstMove) {
             int column = SimpleMoves.bestFirstMove(board, playerNumber);
             firstMove = false;
@@ -24,7 +28,6 @@ public class PlayerEasy implements Player {
             if (strategicMove[0] != -1) {
                 board[strategicMove[0]][strategicMove[1]] = playerNumber;
                 blockOrWinCount++;
-//                System.out.println("Block or win from EASY");
                 return strategicMove;
             }
         }
@@ -34,7 +37,6 @@ public class PlayerEasy implements Player {
             for (int i = 0; i <= 5; i++) {
                 if(board[columnIndex][i] == 0) {
                     board[columnIndex][i] = playerNumber;
-//                    System.out.println("Success: column: " + columnIndex + ", row " + i);
                     return new int[] {columnIndex, i};
                 }
             }

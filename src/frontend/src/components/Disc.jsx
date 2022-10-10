@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import {ThemeProvider} from '@mui/material/styles';
 import {discTheme} from '../muiStyleElements';
 
-function Disc(props) {
+export default function Disc(props) {
 
     let discColor = 0;
 
@@ -33,8 +33,6 @@ function Disc(props) {
                 color={discColor}
                 style={{
                     margin: "3px",
-                    maxWidth: "45px",
-                    maxHeight: "45px",
                     minWidth: "39px",
                     minHeight: "39px",
                     transition: 'none'
@@ -45,7 +43,5 @@ function Disc(props) {
             >
             </Button>
         </ThemeProvider>
-    )
+    );
 }
-
-export default Disc

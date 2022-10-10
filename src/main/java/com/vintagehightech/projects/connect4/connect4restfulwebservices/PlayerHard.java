@@ -4,19 +4,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+    /*
+        The Hard player comprises a combination of the MiniMax algorithm and blocking moves.
+        MiniMax looks at all potential moves up to eight moves ahead of the current board. For
+        this reason, several potential moves may return the same value,
+        i.e. the moves are equally good. In this case, all potential good moves are passed
+        to the nextBestMove method of the SimpleMoves class.
+     */
+
 public class PlayerHard implements Player {
     int currentPlayer;
     int oppositionPlayer;
     final int depthTarget = 8;
     boolean firstMove = true;
     HashMap<List<Integer>, Integer> positions = new HashMap<>(7);
-    HashMap<List<Integer>, Integer> refinedPositions = new HashMap<>(7);
 
 
 
     public int[] makeMove(int[][] board, int[] latestMove, int playerNumber) {
-//        System.out.println("Hard Level Move");
-
         if (firstMove) {
             int column = SimpleMoves.bestFirstMove(board, playerNumber);
             firstMove = false;
@@ -28,9 +33,6 @@ public class PlayerHard implements Player {
         int[] checkWinOrBlock = Board.potentialWinOrBlock(board, playerNumber);
         if (checkWinOrBlock[0] != -1) {
             board[checkWinOrBlock[0]][checkWinOrBlock[1]] = playerNumber;
-//            System.out.println("----------------"); // *** TEMP ***
-//            System.out.println("Blocked by Hard!"); // *** TEMP ***
-//            System.out.println("----------------"); // *** TEMP ***
             return checkWinOrBlock;
         }
 
@@ -41,18 +43,11 @@ public class PlayerHard implements Player {
         this.currentPlayer = playerNumber;
         this.oppositionPlayer = playerNumber == 1 ? 2 : 1;
 
-        /*
-        Do we need to copy the board??
-         */
+
         int[][] tempBoard = Arrays.copyOf(board, board.length);
 
         int bestScore = Integer.MIN_VALUE;
         int[] bestMove = {-1, -1};
-        int[] allScores = new int[7];
-
-//        System.out.println("--------------------------"); // *** TEMP ***
-//        System.out.println("Scores from HARD top level"); // *** TEMP ***
-//        System.out.println("--------------------------"); // *** TEMP ***
 
         for (int i = 0; i <= 6; i++) {
             for (int j = 0; j <= 5; j++) {
@@ -65,15 +60,12 @@ public class PlayerHard implements Player {
                             Integer.MAX_VALUE,
                             new int[] {i, j},
                             false);
-//                    System.out.println("Column " + i + ": score = " + score); // *** TEMP ***
                     tempBoard[i][j] = 0;
-                    allScores[i] = score; // *** TO DELETE ***
                     List<Integer> temp = new ArrayList<>(2);
                     temp.add(i);
                     temp.add(j);
                     positions.put(temp, score);
                     if (score > bestScore) {
-//                        bestMove = new int[]{i, j};
                         bestScore = score;
                     }
                     break;
@@ -81,15 +73,7 @@ public class PlayerHard implements Player {
             }
         }
 
-//        System.out.println("--------------------------"); // *** TEMP ***
-
         bestMove = SimpleMoves.nextBestMove(board, positions, bestScore, playerNumber);
-
-//        bestMove = shallowMinimax(board, positions, bestScore, playerNumber);
-
-//        System.out.println("bestMove = " + Arrays.toString(bestMove)); // *** TEMP ***
-//        System.out.println("All scores: " + Arrays.toString(allScores)); // *** TEMP ***
-
         positions.clear();
         board[bestMove[0]][bestMove[1]] = playerNumber;
         return bestMove;
@@ -136,7 +120,6 @@ public class PlayerHard implements Player {
                     break;
                 }
             }
-//            System.out.println("Maximise Best = " + best); // *** TEMP ***
             return best;
         } else {
             int best = Integer.MAX_VALUE;
@@ -163,7 +146,6 @@ public class PlayerHard implements Player {
                     break;
                 }
             }
-//            System.out.println("Minimise Best = " + best); // *** TEMP ***
             return best;
         }
     }

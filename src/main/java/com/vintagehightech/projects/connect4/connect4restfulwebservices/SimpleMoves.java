@@ -60,7 +60,7 @@ public class SimpleMoves {
     /*
         nextBestMove firstly uses the checkNeighbour method to establish if a blocking move
         should be made. If not, it uses the hasMostNeighbours method to make a move in the
-        position has the greatest number of adjacent opposition pieces.
+        position that has the greatest number of adjacent opposition pieces.
      */
 
     public static int[] nextBestMove(int[][] board, HashMap<List<Integer>, Integer> positions, int targetScore, int player) {

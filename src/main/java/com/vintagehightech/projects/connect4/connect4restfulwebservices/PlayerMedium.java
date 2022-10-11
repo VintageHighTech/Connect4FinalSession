@@ -3,7 +3,7 @@ package com.vintagehightech.projects.connect4.connect4restfulwebservices;
 import java.util.Random;
 
     /*
-        The Easy player will make a predetermined "bestFirstMove" for its first move.
+        The Medium player will make a predetermined "bestFirstMove" for its first move.
         For each subsequent move it will first check if there is a potential winning move.
         If not, it will check for a potential blocking move. If neither move is applicable,
         it will choose a column at random.

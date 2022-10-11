@@ -21,20 +21,18 @@ export default function InstructionDialog(props) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Connect 4"}
+                    {"HOW TO PLAY"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Select one of the menu options for player one (orange) and player two (blue):
+                        Select a menu option for player one (orange) and player two (blue).
                         <br/><br/>
-                        Human, Easy, Medium or Hard.
+                        To play against the computer, select 'Human' as either blue or orange,
+                        then select one of the difficulty levels - Easy, Medium or Hard -
+                        as your opponent. You can watch the computer play against itself by
+                        selecting a difficulty level for both orange & blue.
                         <br/><br/>
-                        If you wish to play against the computer, select 'Human' as either blue or orange, then
-                        select one of the difficulty levels as your opponent. You can, if you wish, watch the
-                        computer play against itself by selecting a difficulty level for both orange & blue.
-                        <br/><br/>
-                        Press 'START' to play. Press 'RESET' to interrupt the game. Once the game is over, press
-                        'START' to automatically play a new game with the same menu options.
+                        Select 'START' to play. Select 'RESET' to interrupt the game.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
